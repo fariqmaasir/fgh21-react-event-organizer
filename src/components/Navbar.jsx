@@ -14,9 +14,11 @@ function Navbar() {
           <li>Location</li>
         </ul>
       </div>
-      <div>
-        <button>Log In</button>
-        <button>Sign Up</button>
+      <div className="font-semibold">
+        <button className="w-[140px] h-[40px]">Log In</button>
+        <button className="bg-blue-500 text-white w-[170px] h-[40px] rounded-xl">
+          Sign Up
+        </button>
       </div>
     </nav>
   );
