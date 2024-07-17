@@ -9,9 +9,9 @@ import {
 
 function Footer() {
   return (
-    <footer>
-      <div className="flex justify-around pt-20">
-        <div className="flex flex-col gap-20">
+    <footer className="bg-transparent">
+      <div className="flex justify-evenly pt-20">
+        <div className="flex flex-col gap-24">
           <div>
             <Logo />
             <div>
@@ -26,9 +26,9 @@ function Footer() {
           </div>
           <div className>© 2020 Wetick All Rights Reserved</div>
         </div>
-        <div>
+        <div className="flex flex-col gap-3">
           <div className="font-semibold">Wetick</div>
-          <div className="text-gray-400">
+          <div className="text-gray-400 flex flex-col gap-3">
             <div>About us</div>
             <div>Features</div>
             <div>Blog</div>
@@ -36,18 +36,18 @@ function Footer() {
             <div>Mobile App</div>
           </div>
         </div>
-        <div>
+        <div className="flex flex-col gap-3">
           <div className="font-semibold">Features</div>
-          <div className="text-gray-400">
+          <div className="text-gray-400 flex flex-col gap-3">
             <div>Booking</div>
             <div>Create Event</div>
             <div>Discover</div>
             <div>Register</div>
           </div>
         </div>
-        <div>
+        <div className="flex flex-col gap-3">
           <div className="font-semibold">Company</div>
-          <div className="text-gray-400">
+          <div className="text-gray-400 flex flex-col gap-3">
             <div>Partnership</div>
             <div>Help</div>
             <div>Terms Of Service</div>
