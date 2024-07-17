@@ -1,6 +1,7 @@
 import react from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import CreateEvent from "../components/CreateEvent";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import char from "../assets/img/login.png";
 import event_img_1 from "../assets/img/event-img-1.png";
@@ -21,6 +22,7 @@ import avatar_1 from "../assets/img/avatar-1.png";
 import avatar_2 from "../assets/img/avatar-2.png";
 import avatar_3 from "../assets/img/avatar-3.png";
 import avatar_4 from "../assets/img/avatar-4.png";
+import { Link } from "react-router-dom";
 
 function Homepage() {
   return (
@@ -63,37 +65,39 @@ function Homepage() {
       </div>
       {/* EVENT BOX LIST */}
       <div>
-        <div className="relative w-64 h-96 rounded-3xl overflow-hidden">
-          <img
-            src={event_img_1}
-            alt=""
-            className="object-cover w-full h-full"
-          />
-          <div className="flex flex-col gap-5 absolute bottom-0 left-0 text-white p-5 pb-10">
-            <div>Wed, 15 Nov, 4:00 PM</div>
-            <div className="font-semibold text-[22px] tracking-widest">
-              Sights & Sounds Exhibition
-            </div>
-            <div className="flex">
-              <div className="w-[30px] h-[30px] border border-white rounded-full overflow-hidden">
-                <img src={avatar_1} alt="" />
+        <Link to="/event">
+          <div className="relative w-64 h-96 rounded-3xl overflow-hidden">
+            <img
+              src={event_img_1}
+              alt=""
+              className="object-cover w-full h-full"
+            />
+            <div className="flex flex-col gap-5 absolute bottom-0 left-0 text-white p-5 pb-10">
+              <div>Wed, 15 Nov, 4:00 PM</div>
+              <div className="font-semibold text-[22px] tracking-widest">
+                Sights & Sounds Exhibition
               </div>
-              <div className="w-[30px] h-[30px] border border-white rounded-full overflow-hidden ml-[-10px]">
-                <img src={avatar_2} alt="" />
-              </div>
-              <div className="w-[30px] h-[30px] border border-white rounded-full overflow-hidden ml-[-10px]">
-                <img
-                  src={avatar_3}
-                  alt=""
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="w-[30px] h-[30px] border border-white rounded-full overflow-hidden ml-[-10px]">
-                <img src={avatar_4} alt="" />
+              <div className="flex">
+                <div className="w-[30px] h-[30px] border border-white rounded-full overflow-hidden">
+                  <img src={avatar_1} alt="" />
+                </div>
+                <div className="w-[30px] h-[30px] border border-white rounded-full overflow-hidden ml-[-10px]">
+                  <img src={avatar_2} alt="" />
+                </div>
+                <div className="w-[30px] h-[30px] border border-white rounded-full overflow-hidden ml-[-10px]">
+                  <img
+                    src={avatar_3}
+                    alt=""
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="w-[30px] h-[30px] border border-white rounded-full overflow-hidden ml-[-10px]">
+                  <img src={avatar_4} alt="" />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </Link>
         <div className="flex gap-[50px] pt-10 pb-[175px] justify-center">
           <button
             type="button"

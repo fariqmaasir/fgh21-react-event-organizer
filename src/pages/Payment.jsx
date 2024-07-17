@@ -10,7 +10,7 @@ import { FaPlus } from "react-icons/fa6";
 
 function Payment() {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-[#F4F7FF]">
       <Navbar />
       <div className="flex flex-col items-center w-screen bg-[#F4F7FF] w-full h-full p-[50px]">
         <div className="flex bg-white p-20 w-4/5 rounded-3xl gap-10">

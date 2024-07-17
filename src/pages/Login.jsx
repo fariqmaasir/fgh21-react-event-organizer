@@ -1,45 +1,63 @@
 import react from "react";
 import { FaFacebook, FaGoogle } from "react-icons/fa6";
 import Logo from "../components/Logo";
-import logo_icon from "../assets/icon/logo.png";
 import eyes_icon from "../assets/icon/eyes.png";
 import char from "../assets/img/login.png";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
+  function logProcess(event) {
+    event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    if (email === "admin@mail.com" && password === "1234") {
+      navigate("/");
+    } else {
+      window.alert("Wrong Credentials");
+    }
+    console.log(email);
+    console.log(password);
+    console.log("coba");
+  }
   return (
     <div className="flex">
-      <div className="bg-blue-500 w-screen h-screen">
-        <div>{/* <img src={char} alt="" /> */}</div>
+      <div className="flex justify-center items-center bg-blue-500 w-screen h-screen">
+        <div className>
+          <img src={char} alt="" />
+        </div>
       </div>
       <div className="flex gap-4 flex-col justify-center p-10">
         {/* LOGO */}
         <Logo />
         {/* TITLE */}
         <div>
-          <div className="font-bold text-2xl">Sign in</div>
+          <div className="font-semibold text-2xl">Sign in</div>
           <div className="text-sm">Hi, Welcome back to Urticket!</div>
         </div>
         {/* FORM */}
-        <form className="flex flex-col gap-4">
+        <form onSubmit={logProcess} className="flex flex-col gap-4">
           {/* INPUT */}
           <div className="flex flex-col gap-5 ">
-            <div className="flex border border-{rgba(193, 197, 208, 1)}  overflow-hidden w-80 rounded-xl h-10">
+            {/* <div className="flex border border-{rgba(193, 197, 208, 1)}  overflow-hidden w-80 rounded-xl h-10">
               <input
                 type="text"
                 placeholder="Username"
-                className="items-center w-80  pl-4"
+                className="items-center w-80 pl-4"
               />
-            </div>
-            <div className="flex border border-{rgba(193, 197, 208, 1)}  overflow-hidden w-80 rounded-xl h-10">
+            </div> */}
+            <div className="flex border border-{rgba(193, 197, 208, 1)}  overflow-hidden w-80 rounded-xl h-[55px]">
               <input
-                type="text"
+                name="email"
+                type="email"
                 placeholder="Email"
                 className="items-center w-80 pl-4"
               />
             </div>
-            <div className="flex border border-{rgba(193, 197, 208, 1)}  overflow-hidden w-80 rounded-xl h-10">
+            <div className="flex border border-{rgba(193, 197, 208, 1)}  overflow-hidden w-80 rounded-xl h-[55px]">
               <input
-                type="text"
+                name="password"
+                type="password"
                 placeholder="Password"
                 className="items-center w-72 pl-4"
               />
@@ -49,19 +67,26 @@ function Login() {
             </div>
           </div>
           {/* FORGOT */}
-          <div className="text-right text-blue-600">Forgot Password?</div>
+          <div className="text-right text-[14px] text-blue-600 font-semibold">
+            Forgot Password?
+          </div>
           {/* BUTTON */}
-          <button className="w-80 bg-blue-500 text-white h-10 rounded-xl shadow-sm shadow-blue-500">
+          <button
+            type="submit"
+            className="w-80 bg-blue-500 text-white h-[55px] rounded-xl shadow-sm shadow-blue-500"
+          >
             Sign in
           </button>
           {/* LOGIN WITH ANOTHER */}
-          <div className="flex flex-col items-center pt-10">
+          <div className="flex flex-col items-center pt-10 gap-5">
             <div>or sign in with</div>
-            <div className="flex items-center">
-              <div className="border border-blue-500 w-10">
-                <FaFacebook />
+            <div className="flex items-center gap-3">
+              <div className="border border-blue-500 w-[95px] h-[52px] flex justify-center items-center rounded-xl">
+                <FaGoogle className="text-[24px]" />
               </div>
-              <div className="border border-blue-500 w-10">B</div>
+              <div className="border border-blue-500 w-[95px] h-[52px] flex justify-center items-center rounded-xl">
+                <FaFacebook className="text-[24px]" />
+              </div>
             </div>
           </div>
         </form>

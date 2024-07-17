@@ -1,21 +1,22 @@
 import react from "react";
-import stadium_img from "../assets/img/stadium.png";
-import ticket_1 from "../assets/icon/ticket-1.png";
-import ticket_2 from "../assets/icon/ticket-2.png";
-import ticket_3 from "../assets/icon/ticket-3.png";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
 
 function Booking() {
   return (
-    <div>
+    <div className="bg-[#F4F7FF] ">
       <Navbar />
-      <div className="flex flex-col items-center w-screen bg-[#F4F7FF] w-full h-full p-[50px]">
-        <div className="flex bg-white p-20 w-4/5 rounded-3xl gap-10">
+      <div className="flex flex-col items-center w-screen h-full pt-[70px]">
+        <div className="flex bg-white p-20 w-[94%] rounded-3xl gap-10">
           {/* LEFT */}
           <div className="flex basis-3/6">
-            <div className="">
-              <img src={stadium_img} alt="" />
+            <div className="w-[450px] h-[450px]">
+              <img
+                src={stadium_img}
+                alt=""
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
           {/* RIGHT */}
@@ -56,12 +57,12 @@ function Booking() {
                     <img src={ticket_2} alt="" />
                   </div>
                   <div>
-                    <div className="font-semibold">SECTION REG,ROW 1</div>
-                    <div className="text-gray-500">12 Seats avaliable</div>
+                    <div className="font-semibold">SECTION VIP,ROW 2</div>
+                    <div className="text-gray-500">9 Seats avaliable</div>
                   </div>
                 </div>
                 <div className="flex flex-col items-center">
-                  <div className="font-semibold">$15</div>
+                  <div className="font-semibold">$35</div>
                   <div className="text-gray-500">per person</div>
                 </div>
               </div>
@@ -85,12 +86,12 @@ function Booking() {
                     <img src={ticket_3} alt="" />
                   </div>
                   <div>
-                    <div className="font-semibold">SECTION REG,ROW 1</div>
-                    <div className="text-gray-500">12 Seats avaliable</div>
+                    <div className="font-semibold">SECTION VVIP,ROW 1</div>
+                    <div className="text-gray-500">6 Seats avaliable</div>
                   </div>
                 </div>
                 <div className="flex flex-col items-center">
-                  <div className="font-semibold">$15</div>
+                  <div className="font-semibold">$50</div>
                   <div className="text-gray-500">per person</div>
                 </div>
               </div>
@@ -123,11 +124,11 @@ function Booking() {
                   <div className="text-blue-500">$70</div>
                 </div>
               </div>
-              <div className="pt-[50px]">
+              <Link to="/payment" className="pt-[50px]">
                 <button className="w-80 bg-blue-500 text-white h-10 rounded-xl shadow-sm shadow-blue-500">
                   Checkout
                 </button>
-              </div>
+              </Link>
             </div>
           </div>
         </div>

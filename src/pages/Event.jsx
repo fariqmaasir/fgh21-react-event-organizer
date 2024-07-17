@@ -4,13 +4,14 @@ import map_img from "../assets/img/map.png";
 import { FaMapPin, FaClock, FaHeart } from "react-icons/fa6";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
 
 function Event() {
   return (
-    <div>
+    <div className="bg-[#F4F7FF]">
       <Navbar />
-      <div className="flex flex-col items-center w-screen bg-[#F4F7FF] w-full h-full p-[50px]">
-        <div className="flex bg-white p-20 w-4/5 rounded-3xl gap-10">
+      <div className="flex flex-col items-center w-screen w-full h-full pt-[70px]">
+        <div className="flex bg-white p-20 w-[94%] rounded-3xl gap-10">
           {/* LEFT */}
           <div className="basis-3/5 flex flex-col gap-12 items-center">
             <div className="relative w-[375px] h-[486px] rounded-3xl overflow-hidden">
@@ -19,7 +20,7 @@ function Event() {
                 alt=""
                 className="object-cover w-full h-full"
               />
-              <div className="absolute bottom-0 left-0 text-white"></div>
+              <div className="absolute top-0 left-0 bg-gradient-to-t from-black w-full h-full"></div>
             </div>
             <div className="flex items-center text-xl gap-3">
               <div>
@@ -29,10 +30,10 @@ function Event() {
             </div>
           </div>
           {/* RIGHT */}
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-8 basis-3/5">
             {/* TITLE */}
             <div className="flex flex-col gap-8">
-              <div className="text-[24px] font-semibold w-48">
+              <div className="text-[24px] font-semibold w-52">
                 Sights & Sounds Exhibition
               </div>
               <div className="flex gap-10">
@@ -68,11 +69,11 @@ function Event() {
               <div>
                 <img src={map_img} alt="" />
               </div>
-              <div>
+              <Link to="/booking">
                 <button className="w-80 bg-blue-500 text-white h-10 rounded-xl shadow-sm shadow-blue-500">
                   But Tickets
                 </button>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
