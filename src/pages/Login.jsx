@@ -3,10 +3,20 @@ import { FaFacebook, FaGoogle } from "react-icons/fa6";
 import Logo from "../components/Logo";
 import eyes_icon from "../assets/icon/eyes.png";
 import char from "../assets/img/login.png";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
+  const [type, setType] = react.useState("password");
+  function pass() {
+    if (type === "password") {
+      setType("text");
+    } else {
+      setType("password");
+    }
+    console.log("test...");
+  }
   function logProcess(event) {
     event.preventDefault();
     const email = event.target.email.value;
@@ -57,19 +67,22 @@ function Login() {
             <div className="flex border border-{rgba(193, 197, 208, 1)}  overflow-hidden w-80 rounded-xl h-[55px]">
               <input
                 name="password"
-                type="password"
+                type={type}
                 placeholder="Password"
-                className="items-center w-72 pl-4"
+                className="items-center w-64 pl-4"
               />
-              <button>
+              <button onClick={pass} type="button">
                 <img src={eyes_icon} alt="" />
               </button>
             </div>
           </div>
           {/* FORGOT */}
-          <div className="text-right text-[14px] text-blue-600 font-semibold">
+          <Link
+            to="/forget-password"
+            className="text-right text-[14px] text-blue-600 font-semibold"
+          >
             Forgot Password?
-          </div>
+          </Link>
           {/* BUTTON */}
           <button
             type="submit"
