@@ -9,8 +9,8 @@ import {
 
 function Footer() {
   return (
-    <footer className="bg-transparent">
-      <div className="flex justify-evenly pt-20">
+    <footer className="bg-transparent mx-10">
+      <div className="flex md:flex-row justify-between flex-col gap-10 pt-20">
         <div className="flex flex-col gap-24">
           <div>
             <Logo />
@@ -24,7 +24,6 @@ function Footer() {
               </div>
             </div>
           </div>
-          <div className>© 2020 Wetick All Rights Reserved</div>
         </div>
         <div className="flex flex-col gap-3">
           <div className="font-semibold">Wetick</div>
@@ -56,6 +55,7 @@ function Footer() {
           </div>
         </div>
       </div>
+      <div className>© 2020 Wetick All Rights Reserved</div>
     </footer>
   );
 }

@@ -32,14 +32,16 @@ function Login() {
   }
   return (
     <div className="flex">
-      <div className="flex justify-center items-center bg-blue-500 w-screen h-screen">
+      <div className="md:flex justify-center items-center bg-blue-500 w-screen h-screen hidden">
         <div className>
           <img src={char} alt="" />
         </div>
       </div>
-      <div className="flex gap-4 flex-col justify-center p-10">
+      <div className="flex gap-4 flex-col justify-center p-10 w-screen md:w-fit">
         {/* LOGO */}
-        <Logo />
+        <Link to="/">
+          <Logo />
+        </Link>
         {/* TITLE */}
         <div>
           <div className="font-semibold text-2xl">Sign in</div>
@@ -56,22 +58,22 @@ function Login() {
                 className="items-center w-80 pl-4"
               />
             </div> */}
-            <div className="flex border border-{rgba(193, 197, 208, 1)}  overflow-hidden w-80 rounded-xl h-[55px]">
+            <div className="flex border border-{rgba(193, 197, 208, 1)}  overflow-hidden md:w-80 rounded-xl h-[55px] w-full">
               <input
                 name="email"
                 type="email"
                 placeholder="Email"
-                className="items-center w-80 pl-4"
+                className="items-center w-80 pl-4 outline-none"
               />
             </div>
-            <div className="flex border border-{rgba(193, 197, 208, 1)}  overflow-hidden w-80 rounded-xl h-[55px]">
+            <div className="flex justify-between border border-{rgba(193, 197, 208, 1)}  overflow-hidden md:w-80 rounded-xl h-[55px] w-full">
               <input
                 name="password"
                 type={type}
                 placeholder="Password"
-                className="items-center w-64 pl-4"
+                className="items-center w-4/5 md:w-64 pl-4 outline-none"
               />
-              <button onClick={pass} type="button">
+              <button onClick={pass} type="button" className="mx-5">
                 <img src={eyes_icon} alt="" />
               </button>
             </div>
@@ -86,7 +88,7 @@ function Login() {
           {/* BUTTON */}
           <button
             type="submit"
-            className="w-80 bg-blue-500 text-white h-[55px] rounded-xl shadow-sm shadow-blue-500"
+            className="w-full md:w-80 bg-blue-500 text-white h-[55px] rounded-xl shadow-sm shadow-blue-500"
           >
             Sign in
           </button>
@@ -94,10 +96,10 @@ function Login() {
           <div className="flex flex-col items-center pt-10 gap-5">
             <div>or sign in with</div>
             <div className="flex items-center gap-3">
-              <div className="border border-blue-500 w-[95px] h-[52px] flex justify-center items-center rounded-xl">
+              <div className="border border-blue-500 w-[95px] h-[52px] flex justify-center items-center rounded-xl cursor-pointer">
                 <FaGoogle className="text-[24px]" />
               </div>
-              <div className="border border-blue-500 w-[95px] h-[52px] flex justify-center items-center rounded-xl">
+              <div className="border border-blue-500 w-[95px] h-[52px] flex justify-center items-center rounded-xl cursor-pointer">
                 <FaFacebook className="text-[24px]" />
               </div>
             </div>

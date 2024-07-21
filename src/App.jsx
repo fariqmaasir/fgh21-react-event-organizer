@@ -2,7 +2,10 @@ import react from "react";
 import Login from "./pages/Login";
 import Homepage from "./pages/Homepage";
 import Event from "./pages/Event";
+import Create from "./pages/Create";
 import Booking from "./pages/Booking";
+import ForgetPassword from "./pages/ForgetPassword";
+import SignUp from "./pages/SignUp";
 import MyBooking from "./pages/MyBooking";
 import MyWishlist from "./pages/MyWishlist";
 import Payment from "./pages/Payment";
@@ -48,12 +51,24 @@ const router = createBrowserRouter([
     element: <ChangePassword />,
   },
   {
-    path: "/create-event",
+    path: "/create",
     element: <CreateEvent />,
+  },
+  {
+    path: "/create-event",
+    element: <Create />,
   },
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/sign-up",
+    element: <SignUp />,
+  },
+  {
+    path: "/forget-password",
+    element: <ForgetPassword />,
   },
   {
     path: "/sidebar",
