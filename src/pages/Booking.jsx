@@ -66,6 +66,8 @@ function Booking() {
         console.log("SetNameIF");
         SetName1("");
         SetName("" + name2 + name3);
+        console.log(name);
+        console.log(quan);
         if (name.length <= 6) {
           SetName("-");
         }

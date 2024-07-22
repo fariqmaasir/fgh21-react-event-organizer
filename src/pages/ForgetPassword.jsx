@@ -2,6 +2,7 @@ import react from "react";
 import Logo from "../components/Logo";
 import char from "../assets/img/login.png";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function ForgetPassword() {
   const navigate = useNavigate();

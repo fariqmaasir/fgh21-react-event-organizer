@@ -1,5 +1,6 @@
 import react from "react";
 import { FaX } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 function CreateEvent() {
   const [showEvent, setShowEvent] = react.useState(false);
@@ -27,7 +28,7 @@ function CreateEvent() {
                     name="name"
                     type="text"
                     placeholder="Input Name Event ..."
-                    className="items-center w-[482px] pl-4"
+                    className="items-center w-[482px] pl-4 outline-none"
                   />
                 </div>
               </div>
@@ -39,7 +40,7 @@ function CreateEvent() {
                     name="location"
                     type="text"
                     placeholder="Select Location"
-                    className="items-center w-[482px] pl-4"
+                    className="items-center w-[482px] pl-4 outline-none"
                   />
                 </div>
               </div>
@@ -51,7 +52,7 @@ function CreateEvent() {
                     name="price"
                     type="text"
                     placeholder="Input Price ..."
-                    className="items-center w-[482px] pl-4"
+                    className="items-center w-[482px] pl-4 outline-none"
                   />
                 </div>
               </div>
@@ -65,7 +66,7 @@ function CreateEvent() {
                     name="category"
                     type="text"
                     placeholder="Select Category"
-                    className="items-center w-[482px] pl-4"
+                    className="items-center w-[482px] pl-4 outline-none"
                   />
                 </div>
               </div>
@@ -77,7 +78,7 @@ function CreateEvent() {
                     name="date"
                     type="text"
                     placeholder="01/01/2022"
-                    className="items-center w-[482px] pl-4"
+                    className="items-center w-[482px] pl-4 outline-none"
                   />
                 </div>
               </div>
@@ -89,7 +90,7 @@ function CreateEvent() {
                     name="img"
                     type="text"
                     placeholder="Choose File ..."
-                    className="items-center w-[482px] pl-4"
+                    className="items-center w-[482px] pl-4 outline-none"
                   />
                 </div>
               </div>
@@ -103,7 +104,7 @@ function CreateEvent() {
                 name="detail"
                 type="text"
                 placeholder="Input Detail ..."
-                className="items-center w-full pl-4"
+                className="items-center w-full pl-4 outline-none"
               />
             </div>
           </div>

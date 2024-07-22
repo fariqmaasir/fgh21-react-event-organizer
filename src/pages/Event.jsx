@@ -94,7 +94,7 @@ function Event() {
             </div>
             {/* TITLE */}
             <div className="md:flex hidden flex-col gap-8 mx-5">
-              <div className="text-[24px] font-semibold w-52">
+              <div className="text-[24px] font-semibold w-60 tracking-wider">
                 Sights & Sounds Exhibition
               </div>
               <div className="flex gap-10">

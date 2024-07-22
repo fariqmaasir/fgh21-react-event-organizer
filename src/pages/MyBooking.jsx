@@ -74,7 +74,7 @@ function MyBooking() {
             </div>
           </div>
           {/* BOTTOM */}
-          <div className="flex flex-col gap-10 overflow-y-scroll">
+          <div className="flex flex-col gap-10 overflow-y-scroll scrollbar-hide">
             <div className={datas ? "hidden" : ""}>
               <div className="flex flex-col items-center py-40">
                 <div className="font-semibold text-[24px]">

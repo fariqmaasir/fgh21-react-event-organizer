@@ -10,7 +10,7 @@ function Navbar() {
     console.log(showMenu);
   }
   return (
-    <nav className="flex flex-col md:flex-row justify-between items-center md:px-8 bg-white">
+    <nav className="flex flex-col md:flex-row justify-between items-center md:mx-8 bg-white">
       <div className="md:contents flex items-center justify-between w-full">
         <div>
           <Link to="/">
@@ -23,13 +23,16 @@ function Navbar() {
       </div>
       <div className={showMenu ? "hidden" : ""}>
         <ul className="md:flex-row flex-col flex gap-10 items-center">
-          <Link to="/" className="font-semibold">
+          <Link to="/" className="font-semibold hover:text-blue-500">
             Home
           </Link>
-          <Link to="/create-event" className="font-semibold">
+          <Link
+            to="/create-event"
+            className="font-semibold hover:text-blue-500"
+          >
             Create Event
           </Link>
-          <li className="font-semibold">Location</li>
+          <li className="font-semibold hover:text-blue-500">Location</li>
         </ul>
       </div>
       <div className={showMenu ? "hidden" : ""}>

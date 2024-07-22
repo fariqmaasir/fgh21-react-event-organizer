@@ -7,8 +7,13 @@ import atm_card from "../assets/icon/atm.png";
 import emoney from "../assets/icon/e-money.png";
 import retail from "../assets/icon/retail.png";
 import { FaPlus } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 function Payment() {
+  const navigate = useNavigate();
+  function myBook() {
+    navigate("/my-booking");
+  }
   return (
     <div className="flex flex-col md:bg-[#F4F7FF]">
       <NavbarProfile />
@@ -107,7 +112,7 @@ function Payment() {
                     <div className="text-blue-500 font-semibold">$70</div>
                   </div>
                 </div>
-                <div className="pt-[50px]">
+                <div className="pt-[50px]" onClick={myBook}>
                   <button className="w-full md:w-80 bg-blue-500 text-white h-10 rounded-xl shadow-sm shadow-blue-500">
                     Payment
                   </button>

@@ -47,13 +47,13 @@ function Homepage() {
     },
     {
       id: 2,
-      title: "Iwan Fals Concert",
+      title: "Iwan Concert",
       date: "Wed, 15 Nov, 10:00 PM",
       img: event_img_11,
     },
     {
       id: 3,
-      title: "Gaott Gua tuhhh",
+      title: "Gaott Gua Tuuu",
       date: "Wed, 15 Nov, 6:00 PM",
       img: event_img_7,
     },
@@ -83,6 +83,10 @@ function Homepage() {
   }
   function scrollRDown() {
     document.getElementById("event-img-down").scrollLeft += 100;
+  }
+  const [showImg, setShowImg] = react.useState(true);
+  function img() {
+    setShowImg(!showImg);
   }
   return (
     <div>
@@ -161,7 +165,7 @@ function Homepage() {
                       </div>
                       <div className="w-[30px] h-[30px] border border-white rounded-full overflow-hidden ml-[-10px] relative">
                         <img src={avatar_4} alt="" />
-                        <div className="absolute bg-orange-600/60 top-0 left-0 w-full h-full flex justify-center items-center">
+                        <div className="absolute bg-orange-600/60 top-0 left-0 w-full h-full flex justify-center items-center text-[10px]">
                           62+
                         </div>
                       </div>
@@ -218,25 +222,33 @@ function Homepage() {
             </div>
             <div className="text-white">Bali</div>
           </div>
-          <div className="flex flex-col items-center gap-3">
+          <div
+            className={showImg ? "hidden" : "flex flex-col items-center gap-3"}
+          >
             <div className="md:w-[230px] md:h-[140px] rounded-xl overflow-hidden cursor-pointer">
               <img src={aceh_city} alt="" className="w-full h-full" />
             </div>
             <div className="text-white">Aceh</div>
           </div>
-          <div className="flex flex-col items-center gap-3">
+          <div
+            className={showImg ? "hidden" : "flex flex-col items-center gap-3"}
+          >
             <div className="md:w-[230px] md:h-[140px] rounded-xl overflow-hidden cursor-pointer">
               <img src={solo_city} alt="" className="w-full h-full" />
             </div>
             <div className="text-white">Solo</div>
           </div>
-          <div className="flex flex-col items-center gap-3">
+          <div
+            className={showImg ? "hidden" : "flex flex-col items-center gap-3"}
+          >
             <div className="md:w-[230px] md:h-[140px] rounded-xl overflow-hidden cursor-pointer">
               <img src={yogyakarta_city} alt="" className="w-full h-full" />
             </div>
             <div className="text-white">Yogyakarta</div>
           </div>
-          <div className="flex flex-col items-center gap-3">
+          <div
+            className={showImg ? "hidden" : "flex flex-col items-center gap-3"}
+          >
             <div className="md:w-[230px] md:h-[140px] rounded-xl overflow-hidden cursor-pointer">
               <img src={semarang_city} alt="" className="w-full h-full" />
             </div>
@@ -247,6 +259,7 @@ function Homepage() {
           <button
             type="button"
             className="bg-white w-[255px] h-[40px] rounded-xl text-blue-500 font-semibold"
+            onClick={img}
           >
             See All
           </button>

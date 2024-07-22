@@ -29,13 +29,16 @@ function NavbarProfile() {
       </div>
       <div className={showMenu ? "hidden" : ""}>
         <ul className="md:flex-row flex-col flex gap-10 items-center">
-          <Link to="/" className="font-semibold">
+          <Link to="/" className="font-semibold hover:text-blue-500">
             Home
           </Link>
-          <Link to="/create-event" className="font-semibold">
+          <Link
+            to="/create-event"
+            className="font-semibold hover:text-blue-500"
+          >
             Create Event
           </Link>
-          <li className="font-semibold">Location</li>
+          <li className="font-semibold hover:text-blue-500">Location</li>
         </ul>
       </div>
       <Link to="/profile">

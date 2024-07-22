@@ -8,38 +8,38 @@ import CreateEvent from "../components/CreateEvent";
 function Create() {
   const [showEvent, setShowEvent] = react.useState(true);
   const data = [
-    {
-      id: 1,
-      title: "Sights & Sounds Exhibition",
-      date: "Wed, 15 Nov, 4:00 PM",
-      dates: "15",
-      day: "Wed",
-      location: "Jakarta,Indonesia",
-    },
-    {
-      id: 2,
-      title: "Jakarta Fair",
-      date: "Wed, 22 Nov, 4:00 PM",
-      dates: "22",
-      day: "Wed",
-      location: "Jakarta,Indonesia",
-    },
-    {
-      id: 3,
-      title: "Kdot",
-      date: "Wed, 15 Nov, 4:00 PM",
-      dates: "17",
-      day: "Wed",
-      location: "Jakarta,Indonesia",
-    },
-    {
-      id: 4,
-      title: "The Weeknd",
-      date: "Wed, 15 Nov, 4:00 PM",
-      dates: "18",
-      day: "Wed",
-      location: "Jakarta,Indonesia",
-    },
+    // {
+    //   id: 1,
+    //   title: "Sights & Sounds Exhibition",
+    //   date: "Wed, 15 Nov, 4:00 PM",
+    //   dates: "15",
+    //   day: "Wed",
+    //   location: "Jakarta,Indonesia",
+    // },
+    // {
+    //   id: 2,
+    //   title: "Jakarta Fair",
+    //   date: "Wed, 22 Nov, 4:00 PM",
+    //   dates: "22",
+    //   day: "Wed",
+    //   location: "Jakarta,Indonesia",
+    // },
+    // {
+    //   id: 3,
+    //   title: "Kdot",
+    //   date: "Wed, 15 Nov, 4:00 PM",
+    //   dates: "17",
+    //   day: "Wed",
+    //   location: "Jakarta,Indonesia",
+    // },
+    // {
+    //   id: 4,
+    //   title: "The Weeknd",
+    //   date: "Wed, 15 Nov, 4:00 PM",
+    //   dates: "18",
+    //   day: "Wed",
+    //   location: "Jakarta,Indonesia",
+    // },
   ];
   function main() {
     setShowEvent(!showEvent);
@@ -75,7 +75,7 @@ function Create() {
             </div>
           </div>
           {/* BOTTOM */}
-          <div className="flex flex-col gap-10 overflow-y-scroll">
+          <div className="flex flex-col gap-10 overflow-y-scroll scrollbar-hide">
             <div className={datas ? "hidden" : ""}>
               <div className="flex flex-col items-center py-40">
                 <div className="font-semibold text-[24px]">
@@ -127,7 +127,7 @@ function Create() {
         </div>
       </div>
       <Footer className="bg-[#F4F7FF]" />
-      <div className={showEvent ? "hidden" : ""} onClick={main}>
+      <div className={showEvent ? "hidden" : ""}>
         <CreateEvent />
       </div>
     </div>
