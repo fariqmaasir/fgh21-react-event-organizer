@@ -1,5 +1,5 @@
 import react from "react";
-import NavbarProfile from "../components/NavbarProfile";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import stadium_img from "../assets/img/stadium.png";
@@ -49,7 +49,7 @@ function Booking() {
   function plus3() {
     if (num3 < 4) {
       SetNum3(num3 + 1);
-      SetName3("Vip(" + (num3 + 1) + ")");
+      SetName3("Vvip(" + (num3 + 1) + ")");
       SetQuan3(num3 + 1);
       SetPrice3((num3 + 1) * 50);
       SetName(name1 + name2 + "Vvip(" + (num3 + 1) + ")");
@@ -63,11 +63,9 @@ function Booking() {
       SetQuan1(num1 - 1);
       SetPrice1((num1 - 1) * 15);
       if (num1 <= 1) {
-        console.log("SetNameIF");
         SetName1("");
+        SetQuan(num2 + num3);
         SetName("" + name2 + name3);
-        console.log(name);
-        console.log(quan);
         if (name.length <= 6) {
           SetName("-");
         }
@@ -92,6 +90,7 @@ function Booking() {
       SetPrice2((num2 - 1) * 15);
       if (num2 <= 1) {
         SetName2("");
+        SetQuan(num1 + num3);
         SetName(name1 + "" + name3);
         if (name.length <= 6) {
           SetName("-");
@@ -116,7 +115,8 @@ function Booking() {
       SetQuan3(num3 - 1);
       SetPrice3((num3 - 1) * 15);
       if (num3 <= 1) {
-        SetName1("");
+        SetName3("");
+        SetQuan(num2 + num1);
         SetName(name1 + name2 + "");
         if (name.length <= 7) {
           SetName("-");
@@ -138,7 +138,7 @@ function Booking() {
   }
   return (
     <div className="md:bg-[#F4F7FF] ">
-      <NavbarProfile />
+      <Navbar />
       <div className="flex flex-col items-center w-screen h-full md:pt-[70px]">
         <div className="flex bg-white p-20 md:w-[94%] rounded-3xl gap-10">
           {/* LEFT */}
@@ -270,19 +270,19 @@ function Booking() {
               <div className="flex flex-col gap-4 ">
                 <div className="flex justify-between">
                   <div className="font-semibold">Ticket Section</div>
-                  <div className="text-blue-500 font-semibold">{name}</div>
+                  <div className="text-[#508D4E] font-semibold">{name}</div>
                 </div>
                 <div className="flex justify-between">
                   <div className="font-semibold">Quantity</div>
-                  <div className="text-blue-500 font-semibold">{quan}</div>
+                  <div className="text-[#508D4E] font-semibold">{quan}</div>
                 </div>
                 <div className="flex justify-between">
                   <div className="font-semibold">Total Payment</div>
-                  <div className="text-blue-500 font-semibold">{price}</div>
+                  <div className="text-[#508D4E] font-semibold">{price}</div>
                 </div>
               </div>
               <Link to="/payment" className="pt-10">
-                <button className="w-80 bg-blue-500 text-white h-10 rounded-xl shadow-sm shadow-blue-500">
+                <button className="w-80 bg-[#508D4E] text-white h-10 rounded-xl shadow-sm shadow-[#508D4E]">
                   Checkout
                 </button>
               </Link>

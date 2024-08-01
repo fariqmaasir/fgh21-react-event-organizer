@@ -3,18 +3,27 @@ import event_img_1 from "../assets/img/event-img-1.png";
 import map_img from "../assets/img/map.png";
 import { FaMapPin, FaClock, FaHeart } from "react-icons/fa6";
 import Navbar from "../components/Navbar";
-import NavbarProfile from "../components/NavbarProfile";
 import Footer from "../components/Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import avatar_1 from "../assets/img/avatar-1.png";
 import avatar_2 from "../assets/img/avatar-2.png";
 import avatar_3 from "../assets/img/avatar-3.png";
 import avatar_4 from "../assets/img/avatar-4.png";
+import { useSelector } from "react-redux";
 
 function Event() {
+  const navigate = useNavigate();
+  const token = useSelector((state) => state.auth.token);
+  function check(locate) {
+    if (token === null) {
+      navigate("/login");
+    } else {
+      navigate("/" + locate);
+    }
+  }
   return (
     <div className="md:bg-[#F4F7FF]">
-      <NavbarProfile />
+      <Navbar />
       <div className="flex flex-col items-center w-screen w-full h-full pt-10 md:pt-[70px]">
         <div className="flex bg-white md:p-20 md:w-[94%] rounded-3xl gap-10">
           {/* LEFT */}
@@ -27,7 +36,10 @@ function Event() {
               />
               <div className="absolute top-0 left-0 bg-gradient-to-t from-black w-full h-full"></div>
             </div>
-            <div className="flex items-center text-xl gap-3 cursor-pointer">
+            <div
+              onClick={() => check("my-wishlist")}
+              className="flex items-center text-xl gap-3 cursor-pointer"
+            >
               <div>
                 <FaHeart />
               </div>
@@ -153,11 +165,14 @@ function Event() {
                   className="w-full md:w-80 cursor-pointer"
                 />
               </div>
-              <Link to="/booking">
-                <button className=" w-full md:w-80 bg-blue-500 text-white h-10 rounded-xl shadow-sm shadow-blue-500">
+              <div>
+                <button
+                  className=" w-full md:w-80 bg-[#508D4E] text-white h-10 rounded-xl shadow-sm shadow-[#508D4E]"
+                  onClick={() => check("booking")}
+                >
                   But Tickets
                 </button>
-              </Link>
+              </div>
             </div>
           </div>
         </div>

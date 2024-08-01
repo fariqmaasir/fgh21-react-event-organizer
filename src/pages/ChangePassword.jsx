@@ -1,6 +1,6 @@
 import react from "react";
 import { FaChevronDown } from "react-icons/fa6";
-import NavbarProfile from "../components/NavbarProfile";
+import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
@@ -10,7 +10,7 @@ function ChangePassword() {
   function name(params) {}
   return (
     <div className="md:bg-[#F4F7FF]">
-      <NavbarProfile />
+      <Navbar />
       <div className="flex w-screen w-full h-full pt-[70px]">
         <div className="hidden md:block">
           <Sidebar />
@@ -54,7 +54,7 @@ function ChangePassword() {
                 />
               </div>
             </div>
-            <div className="w-full bg-blue-500 flex items-center justify-center h-[55px] rounded-xl text-white font-semibold shadow-sm shadow-blue-500">
+            <div className="w-full bg-[#508D4E] flex items-center justify-center h-[55px] rounded-xl text-white font-semibold shadow-sm shadow-[#508D4E]">
               <button type="submit" className="w-full h-full">
                 Update
               </button>

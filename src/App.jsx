@@ -1,4 +1,5 @@
 import react from "react";
+import { Provider } from "react-redux";
 import Login from "./pages/Login";
 import Homepage from "./pages/Homepage";
 import Event from "./pages/Event";
@@ -16,6 +17,7 @@ import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 import CreateEvent from "./components/CreateEvent";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { store } from "./redux/store";
 
 const router = createBrowserRouter([
   {
@@ -77,7 +79,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Provider store={store}>
+      <RouterProvider router={router} />;
+    </Provider>
+  );
 }
 
 export default App;

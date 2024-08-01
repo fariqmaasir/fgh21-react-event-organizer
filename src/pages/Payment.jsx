@@ -1,5 +1,5 @@
 import react from "react";
-import NavbarProfile from "../components/NavbarProfile";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import bank from "../assets/icon/bank.png";
 import card from "../assets/icon/card.png";
@@ -16,7 +16,7 @@ function Payment() {
   }
   return (
     <div className="flex flex-col md:bg-[#F4F7FF]">
-      <NavbarProfile />
+      <Navbar />
       <div className="flex flex-col items-center w-screen h-full md:pt-[70px]">
         <div className="flex bg-white p-20 md:w-[94%] rounded-3xl gap-10">
           {/* LEFT */}
@@ -95,25 +95,25 @@ function Payment() {
                 <div className="flex flex-col gap-4 ">
                   <div className="flex justify-between">
                     <div className="font-semibold">Event</div>
-                    <div className="text-blue-500 font-semibold">
+                    <div className="text-[#508D4E] font-semibold">
                       Sights & Sounds Exhibition
                     </div>
                   </div>
                   <div className="flex justify-between">
                     <div className="font-semibold">Ticket Section</div>
-                    <div className="text-blue-500 font-semibold">VIP</div>
+                    <div className="text-[#508D4E] font-semibold">VIP</div>
                   </div>
                   <div className="flex justify-between">
                     <div className="font-semibold">Quantity</div>
-                    <div className="text-blue-500 font-semibold">2</div>
+                    <div className="text-[#508D4E] font-semibold">2</div>
                   </div>
                   <div className="flex justify-between">
                     <div className="font-semibold">Total Payment</div>
-                    <div className="text-blue-500 font-semibold">$70</div>
+                    <div className="text-[#508D4E] font-semibold">$70</div>
                   </div>
                 </div>
                 <div className="pt-[50px]" onClick={myBook}>
-                  <button className="w-full md:w-80 bg-blue-500 text-white h-10 rounded-xl shadow-sm shadow-blue-500">
+                  <button className="w-full md:w-80 bg-[#508D4E] text-white h-10 rounded-xl shadow-sm shadow-[#508D4E]">
                     Payment
                   </button>
                 </div>

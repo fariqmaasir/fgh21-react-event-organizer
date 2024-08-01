@@ -1,6 +1,6 @@
 import react from "react";
 import { FaHeart } from "react-icons/fa6";
-import NavbarProfile from "../components/NavbarProfile";
+import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
@@ -55,7 +55,7 @@ function MyWishlist() {
   showData();
   return (
     <div className="md:bg-[#F4F7FF]">
-      <NavbarProfile />
+      <Navbar />
       <div className="flex w-screen w-full h-full md:pt-[70px]">
         <div className="md:block hidden">
           <Sidebar />
@@ -110,7 +110,7 @@ function MyWishlist() {
                       </div>
                     </div>
                   </div>
-                  <FaHeart className="text-3xl text-blue-500" />
+                  <FaHeart className="text-3xl text-[#508D4E]" />
                 </div>
               );
             })}

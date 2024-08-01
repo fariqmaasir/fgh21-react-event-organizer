@@ -1,5 +1,5 @@
 import react from "react";
-import NavbarProfile from "../components/NavbarProfile";
+import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import { FaCalendar } from "react-icons/fa6";
@@ -50,7 +50,7 @@ function MyBooking() {
   console.log(datas);
   return (
     <div className="md:bg-[#F4F7FF]">
-      <NavbarProfile />
+      <Navbar />
       <div className="flex w-screen w-full md:pt-[70px]">
         <div className="md:block hidden">
           <Sidebar />
@@ -103,7 +103,7 @@ function MyBooking() {
                       <div className="text-[#373A42BF]/75">{item.location}</div>
                       <div className="text-[#373A42BF]/75">{item.date}</div>
                     </div>
-                    <div className="text-blue-500 font-medium cursor-pointer">
+                    <div className="text-[#508D4E] font-medium cursor-pointer">
                       Detail
                     </div>
                   </div>
@@ -125,7 +125,7 @@ function MyBooking() {
                     Wed, 15 Nov, 4:00 PM
                   </div>
                 </div>
-                <div className="text-blue-500 font-medium">Detail</div>
+                <div className="text-[#508D4E] font-medium">Detail</div>
               </div>
             </div> */}
           </div>

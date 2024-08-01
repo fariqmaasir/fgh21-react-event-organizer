@@ -57,7 +57,7 @@ function SignUp() {
   }
   return (
     <div className="flex">
-      <div className="md:flex justify-center items-center bg-blue-500 w-screen h-screen hidden">
+      <div className="md:flex justify-center items-center bg-[#508D4E] w-screen h-screen hidden">
         <div className>
           <img src={char} alt="" />
         </div>
@@ -72,7 +72,7 @@ function SignUp() {
           <div className="font-semibold text-2xl">Sign Up</div>
           <div className="text-sm flex">
             Already have an account?
-            <Link to="/login" className="text-blue-500 font-semibold">
+            <Link to="/login" className="text-[#508D4E] font-semibold">
               Log In
             </Link>
           </div>
@@ -128,7 +128,7 @@ function SignUp() {
           {/* BUTTON */}
           <button
             type="submit"
-            className="md:w-80 bg-blue-500 text-white h-[55px] rounded-xl shadow-sm shadow-blue-500"
+            className="md:w-80 bg-[#508D4E] text-white h-[55px] rounded-xl shadow-sm shadow-[#508D4E]"
           >
             Sign in
           </button>

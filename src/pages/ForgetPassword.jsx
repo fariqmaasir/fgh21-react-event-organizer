@@ -17,7 +17,7 @@ function ForgetPassword() {
   }
   return (
     <div className="flex">
-      <div className="md:flex justify-center items-center bg-blue-500 w-screen h-screen hidden">
+      <div className="md:flex justify-center items-center bg-[#508D4E] w-screen h-screen hidden">
         <div className>
           <img src={char} alt="" />
         </div>
@@ -47,7 +47,7 @@ function ForgetPassword() {
           </div>
           <button
             type="submit"
-            className="md:w-80 bg-blue-500 text-white h-[55px] rounded-xl shadow-sm shadow-blue-500"
+            className="md:w-80 bg-[#508D4E] text-white h-[55px] rounded-xl shadow-sm shadow-[#508D4E]"
           >
             Send
           </button>

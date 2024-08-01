@@ -1,5 +1,5 @@
 import react from "react";
-import NavbarProfile from "../components/NavbarProfile";
+import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
@@ -54,7 +54,7 @@ function Create() {
   showData();
   return (
     <div className="md:bg-[#F4F7FF]">
-      <NavbarProfile />
+      <Navbar />
       <div className="flex w-screen w-full h-full md:pt-[70px]">
         <div className="md:block hidden">
           <Sidebar />
@@ -108,13 +108,13 @@ function Create() {
                         <div className="text-[#373A42BF]/75">{item.date}</div>
                       </div>
                       <div className="flex gap-3">
-                        <div className="text-blue-500 font-medium cursor-pointer">
+                        <div className="text-[#508D4E] font-medium cursor-pointer">
                           Detail
                         </div>
-                        <div className="text-blue-500 font-medium cursor-pointer">
+                        <div className="text-[#508D4E] font-medium cursor-pointer">
                           Update
                         </div>
-                        <div className="text-blue-500 font-medium cursor-pointer">
+                        <div className="text-[#508D4E] font-medium cursor-pointer">
                           Delete
                         </div>
                       </div>
