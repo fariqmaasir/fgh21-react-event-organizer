@@ -7,8 +7,60 @@ import stadium_query_img from "../assets/img/stadium-query.png";
 import ticket_1 from "../assets/icon/ticket-1.png";
 import ticket_2 from "../assets/icon/ticket-2.png";
 import ticket_3 from "../assets/icon/ticket-3.png";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function Booking() {
+  const navigate = useNavigate();
+  let { id } = useParams();
+  const [section, setSection] = react.useState([{}, {}]);
+  const [ticketName, setTicketName] = react.useState();
+
+  const token = useSelector((state) => state.auth.token);
+  if (token === null) {
+    navigate("/login");
+  }
+
+  react.useEffect(() => {
+    (async function () {
+      const response = await fetch(
+        "http://localhost:8888/events/section/" + id
+      );
+      if (!response.ok) {
+        console.log("err");
+      }
+      const json = await response.json();
+      const results = json.results;
+      setSection(results);
+      console.log("ini json", json);
+    })();
+    // function extractSectionsFromObjects(dataArray) {
+    //   return dataArray.map((item) => {
+    //     return item.name.split(" ")[1].toUpperCase();
+    //   });
+    // }
+    // let sections = extractSectionsFromObjects(section);
+    // setTicketName(sections);
+    // console.log(ticketName);
+  }, []);
+  //
+
+  const [name, SetName] = react.useState("-");
+  const [quan, SetQuan] = react.useState("-");
+  const [price, SetPrice] = react.useState("-");
+  let [count, set] = react.useState(0);
+  function min() {
+    count = count - 1;
+    set(count);
+  }
+  function plus(id, title) {
+    count = count + 1;
+    set(count);
+  }
+  if (count <= -1) {
+    count = 0;
+  }
   const [name1, SetName1] = react.useState("");
   const [num1, SetNum1] = react.useState(0);
   const [quan1, SetQuan1] = react.useState(0);
@@ -21,121 +73,119 @@ function Booking() {
   const [num3, SetNum3] = react.useState(0);
   const [quan3, SetQuan3] = react.useState(0);
   const [price3, SetPrice3] = react.useState(0);
-  const [name, SetName] = react.useState("-");
-  const [quan, SetQuan] = react.useState("-");
-  const [price, SetPrice] = react.useState("-");
-  function plus() {
-    if (num1 < 4) {
-      SetNum1(num1 + 1);
-      SetName1("Reg(" + (num1 + 1) + ")");
-      SetQuan1(num1 + 1);
-      SetPrice1((num1 + 1) * 15);
-      SetName("Reg(" + (num1 + 1) + ")" + name2 + name3);
-      SetQuan(num1 + 1 + quan2 + quan3);
-      SetPrice((num1 + 1) * 15 + price2 + price3);
-    }
-  }
-  function plus2() {
-    if (num2 < 4) {
-      SetNum2(num2 + 1);
-      SetName2("Vip(" + (num2 + 1) + ")");
-      SetQuan2(num2 + 1);
-      SetPrice2((num2 + 1) * 35);
-      SetName(name1 + "Vip(" + (num2 + 1) + ")" + name3);
-      SetQuan(num2 + 1 + quan1 + quan3);
-      SetPrice((num2 + 1) * 35 + price1 + price3);
-    }
-  }
-  function plus3() {
-    if (num3 < 4) {
-      SetNum3(num3 + 1);
-      SetName3("Vvip(" + (num3 + 1) + ")");
-      SetQuan3(num3 + 1);
-      SetPrice3((num3 + 1) * 50);
-      SetName(name1 + name2 + "Vvip(" + (num3 + 1) + ")");
-      SetQuan(num1 + num2 + (1 + quan3));
-      SetPrice(price1 + price2 + (num3 + 1) * 50);
-    }
-  }
-  function minus() {
-    if (num1 > 0) {
-      SetNum1(num1 - 1);
-      SetQuan1(num1 - 1);
-      SetPrice1((num1 - 1) * 15);
-      if (num1 <= 1) {
-        SetName1("");
-        SetQuan(num2 + num3);
-        SetName("" + name2 + name3);
-        if (name.length <= 6) {
-          SetName("-");
-        }
-        if (quan <= 1) {
-          SetQuan("-");
-        }
-        if (price <= 15) {
-          SetPrice("-");
-        }
-      } else {
-        SetName1("Reg(" + (num1 - 1) + ")");
-        SetName("Reg(" + (num1 - 1) + ")" + name2 + name3);
-        SetQuan(num1 - 1 + quan2 + quan3);
-        SetPrice((num1 - 1) * 15 + price2 + price3);
-      }
-    }
-  }
-  function minus2() {
-    if (num2 > 0) {
-      SetNum2(num2 - 1);
-      SetQuan2(num2 - 1);
-      SetPrice2((num2 - 1) * 15);
-      if (num2 <= 1) {
-        SetName2("");
-        SetQuan(num1 + num3);
-        SetName(name1 + "" + name3);
-        if (name.length <= 6) {
-          SetName("-");
-        }
-        if (quan <= 1) {
-          SetQuan("-");
-        }
-        if (price <= 35) {
-          SetPrice("-");
-        }
-      } else {
-        SetName(name1 + "Vip(" + (num2 - 1) + ")" + name3);
-        SetName2("Vip(" + (num2 - 1) + ")");
-        SetQuan(quan1 + num2 - 1 + quan3);
-        SetPrice(price1 + (num2 - 1) * 35 + price3);
-      }
-    }
-  }
-  function minus3() {
-    if (num3 > 0) {
-      SetNum3(num3 - 1);
-      SetQuan3(num3 - 1);
-      SetPrice3((num3 - 1) * 15);
-      if (num3 <= 1) {
-        SetName3("");
-        SetQuan(num2 + num1);
-        SetName(name1 + name2 + "");
-        if (name.length <= 7) {
-          SetName("-");
-        }
-        if (quan <= 1) {
-          SetQuan("-");
-        }
-        if (price <= 50) {
-          SetPrice("-");
-        }
-      } else {
-        console.log("SetNameELSE");
-        SetName(name1 + name2 + "Vvip(" + (num3 - 1) + ")");
-        SetName3("Vvip(" + (num3 - 1) + ")");
-        SetQuan(quan1 + quan2 + num3 - 1);
-        SetPrice(price1 + price2 + (num3 - 1) * 15);
-      }
-    }
-  }
+
+  // function plus1() {
+  //   if (num1 < 4) {
+  //     SetNum1(num1 + 1);
+  //     SetName1("Reg(" + (num1 + 1) + ")");
+  //     SetQuan1(num1 + 1);
+  //     SetPrice1((num1 + 1) * 15);
+  //     SetName("Reg(" + (num1 + 1) + ")" + name2 + name3);
+  //     SetQuan(num1 + 1 + quan2 + quan3);
+  //     SetPrice((num1 + 1) * 15 + price2 + price3);
+  //   }
+  // }
+  // function plus2() {
+  //   if (num2 < 4) {
+  //     SetNum2(num2 + 1);
+  //     SetName2("Vip(" + (num2 + 1) + ")");
+  //     SetQuan2(num2 + 1);
+  //     SetPrice2((num2 + 1) * 35);
+  //     SetName(name1 + "Vip(" + (num2 + 1) + ")" + name3);
+  //     SetQuan(num2 + 1 + quan1 + quan3);
+  //     SetPrice((num2 + 1) * 35 + price1 + price3);
+  //   }
+  // }
+  // function plus3() {
+  //   if (num3 < 4) {
+  //     SetNum3(num3 + 1);
+  //     SetName3("Vvip(" + (num3 + 1) + ")");
+  //     SetQuan3(num3 + 1);
+  //     SetPrice3((num3 + 1) * 50);
+  //     SetName(name1 + name2 + "Vvip(" + (num3 + 1) + ")");
+  //     SetQuan(num1 + num2 + (1 + quan3));
+  //     SetPrice(price1 + price2 + (num3 + 1) * 50);
+  //   }
+  // }
+  // function minus1() {
+  //   if (num1 > 0) {
+  //     SetNum1(num1 - 1);
+  //     SetQuan1(num1 - 1);
+  //     SetPrice1((num1 - 1) * 15);
+  //     if (num1 <= 1) {
+  //       SetName1("");
+  //       SetQuan(num2 + num3);
+  //       SetName("" + name2 + name3);
+  //       if (name.length <= 6) {
+  //         SetName("-");
+  //       }
+  //       if (quan <= 1) {
+  //         SetQuan("-");
+  //       }
+  //       if (price <= 15) {
+  //         SetPrice("-");
+  //       }
+  //     } else {
+  //       SetName1("Reg(" + (num1 - 1) + ")");
+  //       SetName("Reg(" + (num1 - 1) + ")" + name2 + name3);
+  //       SetQuan(num1 - 1 + quan2 + quan3);
+  //       SetPrice((num1 - 1) * 15 + price2 + price3);
+  //     }
+  //   }
+  // }
+  // function minus2() {
+  //   if (num2 > 0) {
+  //     SetNum2(num2 - 1);
+  //     SetQuan2(num2 - 1);
+  //     SetPrice2((num2 - 1) * 15);
+  //     if (num2 <= 1) {
+  //       SetName2("");
+  //       SetQuan(num1 + num3);
+  //       SetName(name1 + "" + name3);
+  //       if (name.length <= 6) {
+  //         SetName("-");
+  //       }
+  //       if (quan <= 1) {
+  //         SetQuan("-");
+  //       }
+  //       if (price <= 35) {
+  //         SetPrice("-");
+  //       }
+  //     } else {
+  //       SetName(name1 + "Vip(" + (num2 - 1) + ")" + name3);
+  //       SetName2("Vip(" + (num2 - 1) + ")");
+  //       SetQuan(quan1 + num2 - 1 + quan3);
+  //       SetPrice(price1 + (num2 - 1) * 35 + price3);
+  //     }
+  //   }
+  // }
+  // function minus3() {
+  //   if (num3 > 0) {
+  //     SetNum3(num3 - 1);
+  //     SetQuan3(num3 - 1);
+  //     SetPrice3((num3 - 1) * 15);
+  //     if (num3 <= 1) {
+  //       SetName3("");
+  //       SetQuan(num2 + num1);
+  //       SetName(name1 + name2 + "");
+  //       if (name.length <= 7) {
+  //         SetName("-");
+  //       }
+  //       if (quan <= 1) {
+  //         SetQuan("-");
+  //       }
+  //       if (price <= 50) {
+  //         SetPrice("-");
+  //       }
+  //     } else {
+  //       console.log("SetNameELSE");
+  //       SetName(name1 + name2 + "Vvip(" + (num3 - 1) + ")");
+  //       SetName3("Vvip(" + (num3 - 1) + ")");
+  //       SetQuan(quan1 + quan2 + num3 - 1);
+  //       SetPrice(price1 + price2 + (num3 - 1) * 15);
+  //     }
+  //   }
+  // }
   return (
     <div className="md:bg-[#F4F7FF] ">
       <Navbar />
@@ -153,7 +203,7 @@ function Booking() {
           </div>
           {/* RIGHT */}
           <div>
-            <div className="flex flex-col gap-4 md:py-[25px]">
+            <div className="flex flex-col gap-4 py-[25px]">
               <div className="w-full h-full md:hidden ">
                 <img
                   src={stadium_query_img}
@@ -161,6 +211,52 @@ function Booking() {
                   className="w-full h-full object-cover"
                 />
               </div>
+            </div>
+            {section.map((item) => {
+              console.log(`{plus${item.id}}`);
+              return (
+                <div className="flex flex-col gap-4 py-[25px]">
+                  <div className="flex gap-12">
+                    <div className="flex gap-4">
+                      <div className="w-[45px] h-[45px]">
+                        <img src={ticket_2} alt="" />
+                      </div>
+                      <div>
+                        <div className="font-semibold">{item.name}</div>
+                        <div className="text-gray-500">
+                          {item.quantity} Seats avaliable
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="font-semibold">Rp.{item.price}</div>
+                      <div className="text-gray-500">per person</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center pl-16 justify-between">
+                    <div className="font-semibold">Quantity</div>
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => {
+                          min(item.id, item.name);
+                        }}
+                        className="border border-gray-500 w-[30px] h-[30px] rounded-lg"
+                      >
+                        -
+                      </button>
+                      <div className="font-semibold">{count}</div>
+                      <button
+                        onClick={plus}
+                        className="border border-gray-500 w-[30px] h-[30px] rounded-lg"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+            {/* <div className="flex flex-col gap-4 py-[25px]">
               <div className="flex gap-12">
                 <div className="flex gap-4">
                   <div className="w-[45px] h-[45px]">
@@ -264,7 +360,7 @@ function Booking() {
                   </button>
                 </div>
               </div>
-            </div>
+            </div> */}
             <hr />
             <div className="pt-[25px] font-semibold">
               <div className="flex flex-col gap-4 ">
@@ -274,7 +370,7 @@ function Booking() {
                 </div>
                 <div className="flex justify-between">
                   <div className="font-semibold">Quantity</div>
-                  <div className="text-[#508D4E] font-semibold">{quan}</div>
+                  <div className="text-[#508D4E] font-semibold">{}</div>
                 </div>
                 <div className="flex justify-between">
                   <div className="font-semibold">Total Payment</div>

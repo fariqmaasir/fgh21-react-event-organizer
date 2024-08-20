@@ -5,28 +5,48 @@ import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import eminem from "../assets/img/eminem.png";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { retry } from "@reduxjs/toolkit/query";
+import { useNavigate } from "react-router-dom";
+import { assignProfile } from "../redux/reducers/profile";
 
 function Profile() {
-  const [profession, setProfession] = react.useState([]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  // const [profession, setProfession] = react.useState([]);
   const [nationality, setNationality] = react.useState([]);
   const data = useSelector((state) => state.profile.data);
   const token = useSelector((state) => state.auth.token);
+  if (token === null) {
+    navigate("/login");
+  }
+  async function addProfile() {
+    const url = "http://localhost:8888/auth/profile";
+    const response = await fetch(url, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    const json = await response.json();
+    console.log(json);
+    dispatch(assignProfile(json.results));
+    // console.log("haloooo", json.results);
+  }
   react.useEffect(() => {
-    async function addProfile() {
-      const url = "https://wsw6zh-8888.csb.app/profile/professions";
-      const response = await fetch(url, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
-      const json = await response.json();
-      setProfession(json.results);
-    }
-    addProfile();
+    //   async function addProfile() {
+    //     const url = "https://wsw6zh-8888.csb.app/profile/professions";
+    //     const response = await fetch(url, {
+    //       headers: {
+    //         Authorization: "Bearer " + token,
+    //       },
+    //     });
+    //     const json = await response.json();
+    //     setProfession(json.results);
+    //   }
+    // console.log("prof", profession);
+    //   addProfile();
     async function addNation() {
-      const url = "https://wsw6zh-8888.csb.app/profile/nationalities";
+      const url = "http://localhost:8888/nationality";
       const response = await fetch(url, {
         headers: {
           Authorization: "Bearer " + token,
@@ -35,14 +55,49 @@ function Profile() {
       const json = await response.json();
       setNationality(json.results);
     }
-    console.log("prof", profession);
-    console.log("nation", nationality);
     addNation();
+    addProfile();
+    // console.log("nation", nationality);
   }, []);
   const date = new Date();
-  const futureDate = date.getDate(data.birthdayDate);
+  const futureDate = date.getDate(data.birthDate);
   date.setDate(futureDate);
   const defaultValue = date.toLocaleDateString("en-CA");
+  async function editProfile(e) {
+    e.preventDefault();
+    const fullName = e.target.fullName.value;
+    const username = e.target.username.value;
+    const email = e.target.email.value;
+    const phoneNumber = e.target.phoneNumber.value;
+    const gender = e.target.gender.value;
+    const nationality = e.target.nationality.value;
+    const profession = e.target.profession.value;
+
+    const formData = new URLSearchParams({
+      email,
+      username,
+      fullName,
+      gender,
+      phoneNumber,
+      nationality,
+      profession,
+    });
+    const response = await fetch("http://localhost:8888/auth/edit", {
+      method: "PATCH",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+      body: formData,
+    });
+    const json = await response.json();
+    console.log(json);
+    if (json.success) {
+      window.alert(json.message);
+      addProfile();
+    } else {
+      window.alert(json.message);
+    }
+  }
   return (
     <div className="md:bg-[#F4F7FF]">
       <Navbar />
@@ -52,7 +107,10 @@ function Profile() {
         </div>
         {/* LEFT */}
         <div className="md:flex justify-evenly basis-full bg-white p-10 md:rounded-3xl gap-10">
-          <div className="flex md:block basis-3/6 flex-col gap-12">
+          <form
+            className="flex md:block basis-3/6 flex-col gap-12"
+            onSubmit={editProfile}
+          >
             <div className="mr-64 md:mr-0 text-[20px] font-semibold">
               Profile
             </div>
@@ -61,8 +119,8 @@ function Profile() {
                 <div className="relative border border-gray-500 w-[110px] h-[110px] rounded-full bg-gray-500 overflow-hidden">
                   <img
                     src={data.picture}
-                    alt=""
-                    className="absolute top-0 left-0 w-full h-full object-fit"
+                    alt={data.username}
+                    className="absolute top-0 left-0 w-full h-full object-cover"
                   />
                 </div>
               </div>
@@ -73,36 +131,43 @@ function Profile() {
                 <div className="flex items-center border border-[#C1C5D0] w-full md:w-[315px] h-[55px] rounded-xl">
                   <input
                     type="text"
+                    name="fullName"
                     className="pl-5 outline-none"
-                    defaultValue={data.name}
+                    defaultValue={data.fullName}
                   />
                 </div>
               </div>
               <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-[66px]">
                 <div>Username</div>
-                <div className="flex gap-4">
-                  <div>{data.username}</div>
-                  <div className="underline underline-offset-2 text-[#508D4E] cursor-pointer">
-                    Edit
-                  </div>
+                <div className="flex items-center border border-[#C1C5D0] w-full md:w-[315px] h-[55px] rounded-xl">
+                  <input
+                    type="text"
+                    name="username"
+                    className="pl-5 outline-none"
+                    defaultValue={data.username}
+                  />
                 </div>
               </div>
               <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-[106px]">
                 <div>Email</div>
-                <div className="flex gap-4">
-                  <div>{data.email}</div>
-                  <div className="underline underline-offset-2 text-[#508D4E] cursor-pointer">
-                    Edit
-                  </div>
+                <div className="flex items-center border border-[#C1C5D0] w-full md:w-[315px] h-[55px] rounded-xl">
+                  <input
+                    type="text"
+                    name="email"
+                    className="pl-5 outline-none"
+                    defaultValue={data.email}
+                  />
                 </div>
               </div>
               <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-[98px]">
                 <div>Phone</div>
-                <div className="flex gap-4">
-                  <div>{data.phoneNumber}</div>
-                  <div className="underline underline-offset-2 text-[#508D4E] cursor-pointer">
-                    Edit
-                  </div>
+                <div className="flex items-center border border-[#C1C5D0] w-full md:w-[315px] h-[55px] rounded-xl">
+                  <input
+                    type="text"
+                    name="phoneNumber"
+                    className="pl-5 outline-none"
+                    defaultValue={data.phoneNumber}
+                  />
                 </div>
               </div>
               <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-[85px]">
@@ -113,7 +178,8 @@ function Profile() {
                       type="radio"
                       name="gender"
                       id="male"
-                      defaultChecked={"Male" == `${data.gender}` ? true : false}
+                      value="0"
+                      defaultChecked={`${data.gender}` == 0 ? true : false}
                     />
                     <label htmlFor="male">Male</label>
                   </div>
@@ -122,15 +188,25 @@ function Profile() {
                       type="radio"
                       name="gender"
                       id="female"
-                      defaultChecked={
-                        "Female" == `${data.gender}` ? true : false
-                      }
+                      value="1"
+                      defaultChecked={`${data.gender}` == 1 ? true : false}
                     />
                     <label htmlFor="female">Female</label>
                   </div>
                 </div>
               </div>
               <div className="flex flex-col md:flex-row md:items-center justify-between">
+                <div>Profession</div>
+                <div className="flex items-center border border-[#C1C5D0] w-full md:w-[315px] h-[55px] rounded-xl">
+                  <input
+                    type="text"
+                    name="profession"
+                    className="pl-5 outline-none"
+                    defaultValue={data.profession}
+                  />
+                </div>
+              </div>
+              {/* <div className="flex flex-col md:flex-row md:items-center justify-between">
                 <label for="profession">Profession</label>
                 <div className="flex items-center border border-[#C1C5D0] w-full md:w-[315px] h-[55px] rounded-xl">
                   <select
@@ -144,30 +220,30 @@ function Profile() {
                       return <option value={item.id}>{item.name}</option>;
                     })}
                   </select>
-                  {/* <div className="pl-5"></div> */}
-                  {/* <button type="button" className="pr-5">
-                    <FaChevronDown />
-                  </button> */}
                 </div>
-              </div>
+              </div> */}
               <div className="flex flex-col md:flex-row md:items-center justify-between">
                 <div>Nationality</div>
                 <div className="flex items-center border border-[#C1C5D0] w-full md:w-[315px] h-[55px] rounded-xl">
                   <select
-                    id="profession"
-                    name="proflist"
-                    form="prof"
+                    id="nationality"
+                    name="nationality"
+                    defaultValue={data.nationalityId}
                     className="px-5 w-11/12 h-full rounded-xl outline-none"
                   >
-                    <option value={data.nationality}>{data.nationality}</option>
                     {nationality.map((item) => {
-                      return <option value={item.id}>{item.name}</option>;
+                      return (
+                        <option
+                          selected={
+                            item.id === data.nationalityId ? true : false
+                          }
+                          value={item.id}
+                        >
+                          {item.name}
+                        </option>
+                      );
                     })}
                   </select>
-                  {/* <div className="pl-5">{data.nationality}</div>
-                  <button type="button" className="pr-5">
-                    <FaChevronDown />
-                  </button> */}
                 </div>
               </div>
               <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-[42px]">
@@ -175,7 +251,7 @@ function Profile() {
                 <div className="flex items-center border border-[#C1C5D0] w-full md:w-[315px] h-[55px] rounded-xl">
                   <input
                     type="date"
-                    name=""
+                    name="birthDate"
                     id=""
                     className="px-5 w-11/12 h-full rounded-xl outline-none"
                     defaultValue={defaultValue}
@@ -188,7 +264,7 @@ function Profile() {
                 </button>
               </div>
             </div>
-          </div>
+          </form>
           {/* RIGHT */}
           <div className="hidden md:flex flex-col gap-8 items-center pt-[75px]">
             <div className="w-[137px] h-[137px] bg-gradient-to-r from-[#508D4E] to-purple-500 rounded-full flex justify-center items-center">
@@ -197,7 +273,7 @@ function Profile() {
                   <img
                     src={data.picture}
                     alt=""
-                    className="absolute top-0 left-0 w-full h-full object-fit"
+                    className="absolute top-0 left-0 w-full h-full object-cover"
                   />
                 </div>
               </div>

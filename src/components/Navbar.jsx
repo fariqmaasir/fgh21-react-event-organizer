@@ -82,14 +82,15 @@ function Navbar() {
                         <div className="relative border border-gray-500 w-[44px] h-[44px] rounded-full bg-gray-500 overflow-hidden">
                           <img
                             src={data.picture}
-                            alt=""
-                            className="absolute top-0 left-0 w-full h-full object-fit"
+                            alt={data.username}
+                            className="absolute top-0 left-0 w-full h-full object-cover"
                           />
                         </div>
                       </div>
                     </div>
                     <div>
-                      <div className="font-semibold">{data.name}</div>
+                      {console.log(data)}
+                      <div className="font-semibold">{data.fullName}</div>
                     </div>
                   </div>
                 </div>

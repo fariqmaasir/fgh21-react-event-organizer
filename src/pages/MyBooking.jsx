@@ -3,45 +3,68 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import { FaCalendar } from "react-icons/fa6";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function MyBooking() {
-  const data = [
-    {
-      id: 1,
-      title: "Sights & Sounds Exhibition",
-      date: "Wed, 15 Nov, 4:00 PM",
-      dates: "15",
-      day: "Wed",
-      location: "Jakarta,Indonesia",
-    },
-    {
-      id: 2,
-      title: "Jakarta Fair",
-      date: "Wed, 22 Nov, 4:00 PM",
-      dates: "22",
-      day: "Wed",
-      location: "Jakarta,Indonesia",
-    },
-    {
-      id: 3,
-      title: "Kdot",
-      date: "Wed, 15 Nov, 4:00 PM",
-      dates: "17",
-      day: "Wed",
-      location: "Jakarta,Indonesia",
-    },
-    {
-      id: 4,
-      title: "The Weeknd",
-      date: "Wed, 15 Nov, 4:00 PM",
-      dates: "18",
-      day: "Wed",
-      location: "Jakarta,Indonesia",
-    },
-  ];
+  const navigate = useNavigate();
+  const token = useSelector((state) => state.auth.token);
+  if (token === null) {
+    navigate("/login");
+  }
+  const [booking, setBooking] = react.useState([{}, {}]);
+  // const data = [
+  //   {
+  //     id: 1,
+  //     title: "Sights & Sounds Exhibition",
+  //     date: "Wed, 15 Nov, 4:00 PM",
+  //     dates: "15",
+  //     day: "Wed",
+  //     location: "Jakarta,Indonesia",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Jakarta Fair",
+  //     date: "Wed, 22 Nov, 4:00 PM",
+  //     dates: "22",
+  //     day: "Wed",
+  //     location: "Jakarta,Indonesia",
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Kdot",
+  //     date: "Wed, 15 Nov, 4:00 PM",
+  //     dates: "17",
+  //     day: "Wed",
+  //     location: "Jakarta,Indonesia",
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "The Weeknd",
+  //     date: "Wed, 15 Nov, 4:00 PM",
+  //     dates: "18",
+  //     day: "Wed",
+  //     location: "Jakarta,Indonesia",
+  //   },
+  // ];
+  react.useEffect(() => {
+    (async function () {
+      const response = await fetch("http://localhost:8888/transactions/users", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+      const json = await response.json();
+      setBooking(json.results);
+      console.log(json.results);
+    })();
+  }, []);
   let datas = true;
   function showData() {
-    if (data.length == 0) {
+    if (booking.length == 0) {
       datas = false;
     }
   }
@@ -86,7 +109,7 @@ function MyBooking() {
                 </div>
               </div>
             </div>
-            {data.map((item) => {
+            {booking.map((item) => {
               return (
                 <div className="flex gap-5 px-5">
                   <div className="shadow-md w-[50px] h-[75px] rounded-xl flex flex-col items-center justify-center">

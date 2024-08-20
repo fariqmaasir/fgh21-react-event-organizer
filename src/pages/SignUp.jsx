@@ -25,9 +25,10 @@ function SignUp() {
     }
     console.log("test...");
   }
-  function dataProcess(event) {
+  async function dataProcess(event) {
     event.preventDefault();
-    const name = event.target.name.value;
+    const url = "http://localhost:8888/auth/register";
+    const fullName = event.target.name.value;
     const email = event.target.email.value;
     const password = event.target.password.value;
     const confPassword = event.target.confPassword.value;
@@ -35,24 +36,36 @@ function SignUp() {
     if (password !== confPassword) {
       window.alert("the password doesn't match, please check again");
       return;
-    } else if (password.length < 8) {
-      window.alert("the password is too short, at least 8 letters");
-      return;
-    } else if (!terms.checked) {
+    }
+    // else if (password.length < 8) {
+    //   window.alert("the password is too short, at least 8 letters");
+    //   return;
+    // }
+    else if (!terms.checked) {
       window.alert("please agree to the terms and conditions");
       return;
-    } else {
-      navigate("/login");
     }
-    // if (
-    //   password.includes("@") === false ||
-    //   password.includes("#") === false ||
-    //   password.includes("*") === false ||
-    //   password.includes("$") === false
-    // ) {
-    //   // window.alert("password too weak, try using (@,*,#,$)");
-    //   console.log("makan");
-    //   return;
+    const body = new URLSearchParams({
+      email,
+      password,
+      fullName,
+    });
+
+    const response = await fetch(url, {
+      method: "POST",
+      body,
+    });
+    const data = await response.json();
+    if (data.success) {
+      setValid(!valid);
+      dispatch(login(data.results.token));
+      addProfile(data.results.token);
+      navigate("/login");
+    } else {
+      console.log(data.message);
+      // setWrong(!wrong);
+    }
+    // else {
     // }
   }
   return (
@@ -85,7 +98,7 @@ function SignUp() {
               <input
                 name="name"
                 type="text"
-                placeholder="Username"
+                placeholder="Fullname"
                 className="items-center w-80 pl-4 outline-none"
               />
             </div>

@@ -25,15 +25,15 @@ const router = createBrowserRouter([
     element: <Homepage />,
   },
   {
-    path: "/event",
+    path: "/event/:id",
     element: <Event />,
   },
   {
-    path: "/booking",
+    path: "/booking/:id",
     element: <Booking />,
   },
   {
-    path: "/payment",
+    path: "/payment/:id",
     element: <Payment />,
   },
   {

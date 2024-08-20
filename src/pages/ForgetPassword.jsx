@@ -3,9 +3,14 @@ import Logo from "../components/Logo";
 import char from "../assets/img/login.png";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function ForgetPassword() {
   const navigate = useNavigate();
+  const token = useSelector((state) => state.auth.token);
+  if (token === null) {
+    navigate("/login");
+  }
   function forgProcess(event) {
     event.preventDefault();
     const email = event.target.email.value;

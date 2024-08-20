@@ -8,9 +8,14 @@ import emoney from "../assets/icon/e-money.png";
 import retail from "../assets/icon/retail.png";
 import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Payment() {
   const navigate = useNavigate();
+  const token = useSelector((state) => state.auth.token);
+  if (token === null) {
+    navigate("/login");
+  }
   function myBook() {
     navigate("/my-booking");
   }

@@ -4,7 +4,7 @@ import map_img from "../assets/img/map.png";
 import { FaMapPin, FaClock, FaHeart } from "react-icons/fa6";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import avatar_1 from "../assets/img/avatar-1.png";
 import avatar_2 from "../assets/img/avatar-2.png";
 import avatar_3 from "../assets/img/avatar-3.png";
@@ -13,14 +13,56 @@ import { useSelector } from "react-redux";
 
 function Event() {
   const navigate = useNavigate();
+  let { id } = useParams();
+
+  async function addWishlist() {
+    if (token === null) {
+      navigate("/login");
+    } else {
+      const response = await fetch(
+        `http://localhost:8888/events/wishlist/${id}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      const json = await response.json();
+      console.log(json);
+    }
+  }
+
+  const [dataEvent, setDataEvent] = react.useState({
+    // id: 0,
+    // image: "",
+    // title: "",
+    // date: "",
+    // descriptions: "",
+    // locationId: null,
+    // createdBy: 0,
+  });
   const token = useSelector((state) => state.auth.token);
   function check(locate) {
     if (token === null) {
       navigate("/login");
     } else {
-      navigate("/" + locate);
+      navigate(`/${locate}/${id}`);
     }
   }
+  react.useEffect(() => {
+    (async function () {
+      const response = await fetch("http://localhost:8888/events/list/" + id);
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+      const json = await response.json();
+      console.log(json.results);
+      setDataEvent(json.results[0]);
+    })();
+  }, []);
+  console.log(dataEvent);
+  console.log(dataEvent.image);
   return (
     <div className="md:bg-[#F4F7FF]">
       <Navbar />
@@ -30,14 +72,14 @@ function Event() {
           <div className="md:flex hidden basis-3/5 flex-col gap-12 items-center">
             <div className="relative w-[375px] h-[486px] rounded-3xl overflow-hidden">
               <img
-                src={event_img_1}
-                alt=""
+                src={dataEvent.image}
+                alt={dataEvent.title}
                 className="object-cover w-full h-full"
               />
               <div className="absolute top-0 left-0 bg-gradient-to-t from-black w-full h-full"></div>
             </div>
             <div
-              onClick={() => check("my-wishlist")}
+              onClick={addWishlist}
               className="flex items-center text-xl gap-3 cursor-pointer"
             >
               <div>
@@ -51,14 +93,14 @@ function Event() {
             <div className="md:hidden">
               <div className="relative w-screen h-screen rounded-3xl overflow-hidden">
                 <img
-                  src={event_img_1}
-                  alt=""
+                  src={dataEvent.image}
+                  alt={dataEvent.title}
                   className="object-cover w-full h-full"
                 />
                 <div className="absolute top-0 left-0 bg-gradient-to-t from-black w-full h-full">
                   <div className="flex flex-col gap-8 mx-5 absolute bottom-0 py-52">
                     <div className="text-[34px] font-semibold text-white">
-                      Sights & Sounds Exhibition
+                      {dataEvent.title}
                     </div>
                     <div className="flex div:flex-row flex-col gap-10">
                       <div>
@@ -107,7 +149,7 @@ function Event() {
             {/* TITLE */}
             <div className="md:flex hidden flex-col gap-8 mx-5">
               <div className="text-[24px] font-semibold w-60 tracking-wider">
-                Sights & Sounds Exhibition
+                {dataEvent.title}
               </div>
               <div className="flex gap-10">
                 <div>
@@ -150,10 +192,7 @@ function Event() {
             {/* EVENT DETAIL */}
             <div className="flex flex-col gap-5 mx-5">
               <div className="font-semibold text-[25px]">Event Detail</div>
-              <div className="text-gray-400">
-                After his controversial art exhibition "Tear and Consume" back
-                in November 2018, in which guests were invited to tear up…
-              </div>
+              <div className="text-gray-400">{dataEvent.descriptions}..</div>
               <div className="text-blue-600 cursor-pointer">Read More</div>
             </div>
             <div className="flex flex-col gap-5 mx-5">

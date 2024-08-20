@@ -1,9 +1,38 @@
 import react from "react";
 import { FaX } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function CreateEvent() {
   const [showEvent, setShowEvent] = react.useState(false);
+  const token = useSelector((state) => state.auth.token);
+  async function createEvent(e) {
+    e.preventDefault();
+    const title = e.target.name.value;
+    const location = e.target.location.value;
+    const price = e.target.price.value;
+    const category = e.target.category.value;
+    const date = e.target.date.value;
+    // const image = e.target.image.value;
+    const descriptions = e.target.detail.value;
+
+    const formData = new URLSearchParams({
+      // image,
+      title,
+      // date,
+      descriptions,
+      // locationId,
+    });
+    const response = await fetch("http://localhost:8888/events/create", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+      body: formData,
+    });
+    const data = await response.json();
+    console.log(data);
+  }
   function main() {
     setShowEvent(!showEvent);
     console.log(showEvent);
@@ -11,7 +40,10 @@ function CreateEvent() {
   return (
     <div className={showEvent ? "hidden" : ""}>
       <div className="absolute top-0 left-0 bg-black/50 w-full h-screen flex justify-center items-center">
-        <form className="bg-white w-[1105px] flex flex-col gap-5 p-[30px] rounded-3xl">
+        <form
+          className="bg-white w-[1105px] flex flex-col gap-5 p-[30px] rounded-3xl"
+          onSubmit={createEvent}
+        >
           <div className="flex items-center justify-between">
             <div className="font-semibold text-[20px]">Create Event</div>
             <button type="button" onClick={main}>

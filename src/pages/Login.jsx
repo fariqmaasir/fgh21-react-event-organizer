@@ -27,22 +27,23 @@ function Login() {
   }
   async function addProfile(token) {
     console.log(token);
-    const url = "https://wsw6zh-8888.csb.app/profile";
+    const url = "http://localhost:8888/auth/profile";
     const response = await fetch(url, {
       headers: {
         Authorization: "Bearer " + token,
       },
     });
     const json = await response.json();
+    console.log(json);
     dispatch(assignProfile(json.results));
-    console.log("haloooo", json);
+    console.log("haloooo", json.results);
   }
   async function logProcess(event) {
     event.preventDefault();
     console.log("test ..");
     const email = event.target.email.value;
     const password = event.target.password.value;
-    const url = "https://wsw6zh-8888.csb.app/auth/login";
+    const url = "http://localhost:8888/auth/login";
     const formData = new URLSearchParams();
     formData.append("email", email);
     formData.append("password", password);

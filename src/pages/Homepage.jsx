@@ -43,6 +43,7 @@ function Homepage() {
   const [showImg, setShowImg] = react.useState(true);
   const [showAll, setShowAll] = react.useState("See All");
   const [loading, setLoading] = react.useState(true);
+  const [partners, setPartners] = react.useState([{}]);
   function img() {
     setShowImg(!showImg);
     if (showAll === "See All") {
@@ -54,13 +55,27 @@ function Homepage() {
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch("https://wsw6zh-8888.csb.app/events");
+        const response = await fetch("http://localhost:8888/events/list");
         if (!response.ok) {
           throw new Error(`Response status: ${response.status}`);
         }
         const json = await response.json();
         dispatch(reasignData(json.results));
         setLoading(false);
+        console.log(json.results);
+      } catch (error) {
+        console.error(error.message);
+      }
+    })();
+    (async () => {
+      try {
+        const response = await fetch("http://localhost:8888/partners");
+        if (!response.ok) {
+          throw new Error(`Response status: ${response.status}`);
+        }
+        const json = await response.json();
+        console.log(json.results);
+        setPartners(json.results);
       } catch (error) {
         console.error(error.message);
       }
@@ -288,6 +303,19 @@ function Homepage() {
         </div>
         <div className="text-white">By companies like :</div>
         <div className="grid grid-cols-2 md:grid-cols-6 gap-16">
+          {partners.map((item) => {
+            return (
+              <div className="w-[83px] h-[64px]">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            );
+          })}
+        </div>
+        {/* <div className="grid grid-cols-2 md:grid-cols-6 gap-16">
           <div className="w-[83px] h-[64px]">
             <img
               src={sponsor_icon_1}
@@ -330,7 +358,7 @@ function Homepage() {
               className="w-full h-full object-contain"
             />
           </div>
-        </div>
+        </div> */}
       </div>
       <Footer />
     </div>
@@ -362,16 +390,17 @@ function Skeleton() {
 function EventList() {
   const eventList = useSelector((state) => state.event.eventList);
   return eventList.map((item, index) => {
-    const img = eventList[index].attendees;
+    // const img = eventList[index].attendees;
+    console.log(item);
     return (
       <div>
-        <Link to="/event">
+        <Link to={`/event/${item.id}`}>
           <div
             className="relative w-64 h-96 rounded-3xl overflow-hidden"
             id={item.title}
           >
             <img
-              src={"https://wsw6zh-8888.csb.app/" + item.picture}
+              src={item.image}
               alt={item.title}
               className="object-cover w-full h-full"
             />
@@ -381,14 +410,11 @@ function EventList() {
                 {item.title}
               </div>
               <div className="flex">
-                {img.map((img) => (
+                {/* {img.map((img) => (
                   <div className="w-[30px] h-[30px] border border-white rounded-full overflow-hidden">
-                    <img
-                      src={"https://wsw6zh-8888.csb.app" + img.picture}
-                      alt={img.id}
-                    />
+                    <img src={img.picture} alt={img.id} />
                   </div>
-                ))}
+                ))} */}
               </div>
             </div>
           </div>
@@ -431,20 +457,20 @@ function EventListCategory() {
       >
         <div className="h-3/5 relative">
           <img
-            src={"https://wsw6zh-8888.csb.app/" + item.picture}
-            alt=""
+            src={item.image}
+            alt={item.tit}
             className="w-full h-full object-cover"
           />
           <div className="absolute left-8 -bottom-3">
             <div className="flex">
-              {item.attendees.map((img) => (
+              {/* {item.attendees.map((img) => (
                 <div className="w-[30px] h-[30px] border border-white rounded-full overflow-hidden">
                   <img
-                    src={"https://wsw6zh-8888.csb.app" + img.picture}
+                    src={img.picture}
                     alt={img.id}
                   />
                 </div>
-              ))}
+              ))} */}
               {/* <div className="w-[30px] h-[30px] border border-white rounded-full overflow-hidden">
                 <img src={avatar_1} alt="" />
               </div>

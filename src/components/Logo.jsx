@@ -6,8 +6,8 @@ function Logo() {
     <div className="flex items-center w-[50px] h-[50px] flex gap-2">
       <img src={logo_icon} alt="" />
       <div className="font-bold text-2xl">
-        <span className="text-[#71C9CE] font-bold">Ti</span>
-        <span className="text-[#088395] font-bold">XX</span>
+        <span className="text-[#71C9CE] font-bold">Execu</span>
+        <span className="text-[#088395] font-bold">tix</span>
       </div>
     </div>
   );

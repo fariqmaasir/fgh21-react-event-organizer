@@ -5,9 +5,48 @@ import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import CreateEvent from "../components/CreateEvent";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function ChangePassword() {
-  function name(params) {}
+  const navigate = useNavigate();
+  const token = useSelector((state) => state.auth.token);
+  if (token === null) {
+    navigate("/login");
+  }
+  const [valid, setValid] = react.useState(true);
+  function changePass(e) {
+    e.preventDefault();
+    const oldPass = e.target.oldPass.value;
+    const newPass = e.target.newPass.value;
+    const confPass = e.target.confPass.value;
+    if (newPass != confPass) {
+      setValid(false);
+      return;
+    } else {
+      async function fetchPass() {
+        const formData = new URLSearchParams({
+          oldPassword: oldPass,
+          newPassword: newPass,
+        });
+        const response = await fetch("http://localhost:8888/auth/password", {
+          method: "PATCH",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+          body: formData,
+        });
+        const json = await response.json();
+        if (json.success) {
+          window.alert(json.message);
+        } else {
+          window.alert(json.message)
+        }
+        console.log(json);
+      }
+      fetchPass();
+    }
+  }
   return (
     <div className="md:bg-[#F4F7FF]">
       <Navbar />
@@ -17,7 +56,7 @@ function ChangePassword() {
         </div>
         <div className="flex flex-col bg-white p-10 h-screen w-full md:w-[70%] rounded-3xl gap-10">
           <div className="font-semibold text-[20px]">Change Password</div>
-          <form className="flex flex-col gap-7">
+          <form className="flex flex-col gap-7" onSubmit={changePass}>
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
               <label htmlFor="oldPass">Old Password</label>
               <div className="flex border border-[#C1C5D0] overflow-hidden md:w-[70%] rounded-xl h-[55px] pb-10">
@@ -64,6 +103,17 @@ function ChangePassword() {
       </div>
       <Footer className="bg-[#F4F7FF]" />
       {/* <CreateEvent /> */}
+      {/* <div
+        className={
+          valid
+            ? "hidden"
+            : "absolute top-0 bg-black/60 h-screen w-screen flex justify-center items-center"
+        }
+      >
+        <div className="bg-white p-14 rounded-xl font-semibold text-xl">
+          Password Salah
+        </div>
+      </div> */}
     </div>
   );
 }

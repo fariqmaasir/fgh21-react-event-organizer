@@ -4,54 +4,52 @@ import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import CreateEvent from "../components/CreateEvent";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function Create() {
+  const navigate = useNavigate();
   const [showEvent, setShowEvent] = react.useState(true);
-  const data = [
-    // {
-    //   id: 1,
-    //   title: "Sights & Sounds Exhibition",
-    //   date: "Wed, 15 Nov, 4:00 PM",
-    //   dates: "15",
-    //   day: "Wed",
-    //   location: "Jakarta,Indonesia",
-    // },
-    // {
-    //   id: 2,
-    //   title: "Jakarta Fair",
-    //   date: "Wed, 22 Nov, 4:00 PM",
-    //   dates: "22",
-    //   day: "Wed",
-    //   location: "Jakarta,Indonesia",
-    // },
-    // {
-    //   id: 3,
-    //   title: "Kdot",
-    //   date: "Wed, 15 Nov, 4:00 PM",
-    //   dates: "17",
-    //   day: "Wed",
-    //   location: "Jakarta,Indonesia",
-    // },
-    // {
-    //   id: 4,
-    //   title: "The Weeknd",
-    //   date: "Wed, 15 Nov, 4:00 PM",
-    //   dates: "18",
-    //   day: "Wed",
-    //   location: "Jakarta,Indonesia",
-    // },
-  ];
+  const token = useSelector((state) => state.auth.token);
+  if (token === null) {
+    navigate("/login");
+  }
+  const [event, setEvent] = react.useState([]);
+
+  if (token === null) {
+    navigate("/login");
+  }
+
+  react.useEffect(() => {
+    // Fetch event data
+    (async function () {
+      const response = await fetch("http://localhost:8888/events/users", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      const json = await response.json();
+      setEvent(json.results);
+      console.log(json.results);
+    })();
+
+    // Toggle scroll lock
+    if (!showEvent) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+
+    // Cleanup function
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [showEvent, token]);
+
   function main() {
     setShowEvent(!showEvent);
-    console.log(showEvent);
   }
-  let datas = true;
-  function showData() {
-    if (data.length == 0) {
-      datas = false;
-    }
-  }
-  showData();
+
   return (
     <div className="md:bg-[#F4F7FF]">
       <Navbar />
@@ -76,20 +74,19 @@ function Create() {
           </div>
           {/* BOTTOM */}
           <div className="flex flex-col gap-10 overflow-y-scroll scrollbar-hide">
-            <div className={datas ? "hidden" : ""}>
+            {event.length === 0 ? (
               <div className="flex flex-col items-center py-40">
                 <div className="font-semibold text-[24px]">
-                  No tickets bought
+                  No Events created
                 </div>
                 <div className="font-medium text-[#B3B8B8] w-[340px] text-center">
-                  It appears you haven't bought any tickets yet. Maybe try
-                  searching these?
+                  It appears you haven't created any events yet. Maybe try
+                  create one?
                 </div>
               </div>
-            </div>
-            {data.map((item) => {
-              return (
-                <div className="flex justify-between px-5">
+            ) : (
+              event.map((item) => (
+                <div key={item.id} className="flex justify-between px-5">
                   <div className="flex gap-5">
                     <div className="shadow-md w-[50px] h-[75px] rounded-xl flex flex-col items-center justify-center">
                       <div className="text-[#FF8900] font-semibold">
@@ -121,8 +118,8 @@ function Create() {
                     </div>
                   </div>
                 </div>
-              );
-            })}
+              ))
+            )}
           </div>
         </div>
       </div>

@@ -37,13 +37,13 @@ function Sidebar() {
                 <img
                   src={data.picture}
                   alt=""
-                  className="absolute top-0 left-0 w-full h-full object-fit"
+                  className="absolute top-0 left-0 w-full h-full object-cover"
                 />
               </div>
             </div>
           </div>
           <div>
-            <div className="font-semibold">{data.name}</div>
+            <div className="font-semibold">{data.username}</div>
             <div className="text=gray-500">{data.profession}, ID</div>
           </div>
         </div>
