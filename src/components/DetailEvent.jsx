@@ -3,39 +3,24 @@ import { FaX } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-function CreateEvent() {
+function DetailEvent() {
   const [showEvent, setShowEvent] = react.useState(false);
   const token = useSelector((state) => state.auth.token);
-  async function createEvent(e) {
-    e.preventDefault();
-    const title = e.target.name.value;
-    const location = e.target.location.value;
-    const price = e.target.price.value;
-    const category = e.target.category.value;
-    const inputDate = e.target.date.value;
-    const newDate = new Date(inputDate)
-    const date = newDate.toISOString()
-    // const image = e.target.image.value;
-    const descriptions = e.target.detail.value;
-    // console.log(date)
-    // const dates = new Date(date)
-    // console.log(dates.toISOString())
-    const formData = new URLSearchParams({
-      // image,
-      title,
-      date,
-      descriptions
-      // locationId,
-    });
-    const response = await fetch("http://localhost:8888/events/create", {
-      method: "POST",
+  const [event, setEvent] = react.useState([]);
+  async function dataEvent() {
+    const response = await fetch("http://localhost:8888/events/list/", {
       headers: {
         Authorization: "Bearer " + token,
       },
-      body: formData,
     });
-    const data = await response.json();
+    const json = await response.json();
+    setEvent(json.results);
+    console.log(json.results);
   }
+  react.useEffect(() => {
+    // Fetch event data
+    dataEvent();
+  },[])
   function main() {
     setShowEvent(!showEvent);
   }
@@ -110,8 +95,8 @@ function CreateEvent() {
                   <input
                     id="date"
                     name="date"
-                    type="date"
-                    // placeholder="01/01/2022"
+                    type="text"
+                    placeholder="01/01/2022"
                     className="items-center w-[482px] pl-4 outline-none"
                   />
                 </div>
@@ -156,4 +141,4 @@ function CreateEvent() {
   );
 }
 
-export default CreateEvent;
+export default DetailEvent;

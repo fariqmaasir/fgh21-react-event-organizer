@@ -42,6 +42,18 @@ function Event() {
     // locationId: null,
     // createdBy: 0,
   });
+  function formatTimestamp(timestamp) {
+    const options = { 
+      weekday: 'short', 
+      day: 'numeric', 
+      month: 'short', 
+      hour: 'numeric', 
+      minute: 'numeric', 
+      hour12: true 
+    };
+  
+    return new Date(timestamp).toLocaleString('en-US', options);
+  }
   const token = useSelector((state) => state.auth.token);
   function check(locate) {
     if (token === null) {
@@ -66,7 +78,7 @@ function Event() {
   return (
     <div className="md:bg-[#F4F7FF]">
       <Navbar />
-      <div className="flex flex-col items-center w-screen w-full h-full pt-10 md:pt-[70px]">
+      <div className="flex flex-col items-center w-screen h-full pt-10 md:pt-[70px]">
         <div className="flex bg-white md:p-20 md:w-[94%] rounded-3xl gap-10">
           {/* LEFT */}
           <div className="md:flex hidden basis-3/5 flex-col gap-12 items-center">
@@ -114,7 +126,7 @@ function Event() {
                       <div className="flex items-center gap-1">
                         <FaClock className="text-red-500 text-[23px]" />
                         <div className="text-white text-[23px]">
-                          Wed, 15 Nov, 4:00 PM
+                          {formatTimestamp(dataEvent.date)}
                         </div>
                       </div>
                     </div>
@@ -160,7 +172,7 @@ function Event() {
                 </div>
                 <div className="flex items-center gap-1">
                   <FaClock className="text-red-500" />
-                  <div>Wed, 15 Nov, 4:00 PM</div>
+                  <div>{formatTimestamp(dataEvent.date)}</div>
                 </div>
               </div>
               <div className="">

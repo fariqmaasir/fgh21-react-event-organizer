@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import CreateEvent from "../components/CreateEvent";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaSpinner } from "react-icons/fa";
 import { reasignData } from "../redux/reducers/event";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -81,7 +81,7 @@ function Homepage() {
       }
     })();
   }, []);
-
+ 
   return (
     <div>
       <Navbar />
@@ -91,7 +91,10 @@ function Homepage() {
         </div>
       </div>
       {/* DATE CONTENT */}
-      <div className="flex flex-col gap-10 justify-center items-center pt-[175px] pb-[50px]">
+      <div className="flex flex-col gap-10 justify-center items-center pt-[175px] pb-[50px]">   
+        <div className="animate-spin bg-black/10">
+          <FaSpinner className="text-7xl"/>
+        </div>
         <div className="gap-2 bg-red-200 h-8 w-40 flex justify-center items-center rounded-2xl text-red-500 font-semibold tracking-widest">
           <div className="h-px w-10 bg-red-500"></div>EVENT
         </div>
@@ -218,12 +221,12 @@ function Homepage() {
         </div>
       </div>
       <div className="flex gap-14 flex-col justify-center items-center pt-[175px]">
-        <div className="flex items-center gap-2 bg-red-200 h-8 w-40 flex justify-center items-center rounded-2xl text-red-500 font-semibold tracking-widest">
+        <div className="flex items-center gap-2 bg-red-200 h-8 w-40 justify-center rounded-2xl text-red-500 font-semibold tracking-widest">
           <div className="h-px w-10 bg-red-500"></div>CATEGORY
         </div>
         <div className="text-3xl font-semibold">Browse Events By Category</div>
         <div>
-          <ul className="flex gap-24 grid md:grid-cols-7 grid-cols-3">
+          <ul className="flex gap-24 md:grid-cols-7 grid-cols-3">
             <li className="font-semibold text-gray-700/50 hover:text-[#508D4E] cursor-pointer">
               Music
             </li>
@@ -305,7 +308,7 @@ function Homepage() {
         <div className="grid grid-cols-2 md:grid-cols-6 gap-16">
           {partners.map((item) => {
             return (
-              <div className="w-[83px] h-[64px]">
+              <div className="w-[90px] h-[90px]">
                 <img
                   src={item.image}
                   alt={item.name}
@@ -364,6 +367,18 @@ function Homepage() {
     </div>
   );
 }
+function formatTimestamp(timestamp) {
+  const options = { 
+    weekday: 'short', 
+    day: 'numeric', 
+    month: 'short', 
+    hour: 'numeric', 
+    minute: 'numeric', 
+    hour12: true 
+  };
+
+  return new Date(timestamp).toLocaleString('en-US', options);
+}
 function Skeleton() {
   const eventList = [{}, {}, {}, {}, {}];
   return eventList.map(() => (
@@ -405,7 +420,7 @@ function EventList() {
               className="object-cover w-full h-full"
             />
             <div className="flex flex-col gap-3 w-full absolute bottom-0 text-white p-6 bg-gradient-to-t from-black">
-              <div>{new Date(item.time).toLocaleDateString("en-CA")}</div>
+              <div>{formatTimestamp(item.date)}</div>
               <div className="font-semibold text-[22px] tracking-widest ">
                 {item.title}
               </div>
@@ -495,7 +510,7 @@ function EventListCategory() {
         </div>
         <div className="p-8">
           <div className="text-white text-[14px]">
-            {new Date(item.time).toLocaleDateString("en-CA")}
+            {formatTimestamp(item.date)}
           </div>
           <div className="text-white font-semibold text-[22px]">
             {item.title}

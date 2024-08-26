@@ -4,7 +4,7 @@ import eminem from "../assets/img/eminem.png";
 import { FaBars } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, ScrollRestoration } from "react-router-dom";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -99,6 +99,7 @@ function Navbar() {
           </div>
         </div>
       </div>
+      <ScrollRestoration />
     </nav>
   );
 }

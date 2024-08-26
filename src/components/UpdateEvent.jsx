@@ -12,19 +12,15 @@ function CreateEvent() {
     const location = e.target.location.value;
     const price = e.target.price.value;
     const category = e.target.category.value;
-    const inputDate = e.target.date.value;
-    const newDate = new Date(inputDate)
-    const date = newDate.toISOString()
+    const date = e.target.date.value;
     // const image = e.target.image.value;
     const descriptions = e.target.detail.value;
-    // console.log(date)
-    // const dates = new Date(date)
-    // console.log(dates.toISOString())
+
     const formData = new URLSearchParams({
       // image,
       title,
-      date,
-      descriptions
+      // date,
+      descriptions,
       // locationId,
     });
     const response = await fetch("http://localhost:8888/events/create", {
@@ -110,8 +106,8 @@ function CreateEvent() {
                   <input
                     id="date"
                     name="date"
-                    type="date"
-                    // placeholder="01/01/2022"
+                    type="text"
+                    placeholder="01/01/2022"
                     className="items-center w-[482px] pl-4 outline-none"
                   />
                 </div>

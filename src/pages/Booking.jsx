@@ -4,18 +4,28 @@ import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import stadium_img from "../assets/img/stadium.png";
 import stadium_query_img from "../assets/img/stadium-query.png";
-import ticket_1 from "../assets/icon/ticket-1.png";
-import ticket_2 from "../assets/icon/ticket-2.png";
-import ticket_3 from "../assets/icon/ticket-3.png";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react"
+import {
+  addQty,
+  addEventId,
+  addEventTitle,
+  addTotalPayment,
+  addTicketSection,
+  addSectionId,
+  addQuantity,
+} from "../redux/reducers/transaction";
+import Tickets from "../components/Tickets";
 
 function Booking() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   let { id } = useParams();
-  const [section, setSection] = react.useState([{}, {}]);
-  const [ticketName, setTicketName] = react.useState();
+  const [section, setSection] = react.useState([]);
+  const [event, setEvent] = react.useState([]);
+  console.log(event)
 
   const token = useSelector((state) => state.auth.token);
   if (token === null) {
@@ -35,44 +45,86 @@ function Booking() {
       setSection(results);
       console.log("ini json", json);
     })();
-    // function extractSectionsFromObjects(dataArray) {
-    //   return dataArray.map((item) => {
-    //     return item.name.split(" ")[1].toUpperCase();
-    //   });
-    // }
-    // let sections = extractSectionsFromObjects(section);
-    // setTicketName(sections);
-    // console.log(ticketName);
+    (async function () {
+      const response = await fetch(
+        "http://localhost:8888/events/list/" + id
+      );
+      if (!response.ok) {
+        console.log("err");
+      }
+      const json = await response.json();
+      const results = json.results;
+      setEvent(results[0]);
+      console.log("ini json", json);
+    })();
   }, []);
-  //
 
-  const [name, SetName] = react.useState("-");
-  const [quan, SetQuan] = react.useState("-");
-  const [price, SetPrice] = react.useState("-");
-  let [count, set] = react.useState(0);
-  function min() {
-    count = count - 1;
-    set(count);
-  }
-  function plus(id, title) {
-    count = count + 1;
-    set(count);
-  }
-  if (count <= -1) {
-    count = 0;
-  }
-  const [name1, SetName1] = react.useState("");
-  const [num1, SetNum1] = react.useState(0);
-  const [quan1, SetQuan1] = react.useState(0);
-  const [price1, SetPrice1] = react.useState(0);
-  const [name2, SetName2] = react.useState("");
-  const [num2, SetNum2] = react.useState(0);
-  const [quan2, SetQuan2] = react.useState(0);
-  const [price2, SetPrice2] = react.useState(0);
-  const [name3, SetName3] = react.useState("");
-  const [num3, SetNum3] = react.useState(0);
-  const [quan3, SetQuan3] = react.useState(0);
-  const [price3, SetPrice3] = react.useState(0);
+  const [selectedSections, setSelectedSections] = useState([]);
+
+  const ticketSection = selectedSections.reduce((prev, curr) => {
+    const arr = prev;
+    if (curr.quantity !== 0) {
+      arr.push(`${curr.name}(${curr.quantity})`);
+    }
+    return arr;
+  }, []);
+  const quantity = selectedSections.reduce(
+    (prev, curr) => prev + curr.quantity,
+    0
+  );
+  const price = selectedSections.reduce((prev, curr) => prev + curr.price, 0);
+
+  const sectionId = selectedSections.reduce((prev, curr) => {
+    const arr = prev;
+    if (curr.quantity !== 0) {
+      arr.push(curr.id);
+    }
+    return arr;
+  }, []);
+  const quantityArray = selectedSections.reduce((prev, curr) => {
+    const arr = prev;
+    if (curr.quantity !== 0) {
+      arr.push(curr.quantity);
+    }
+    return arr;
+  }, []);
+
+  console.log(event.title)
+  dispatch(addQuantity(quantityArray));
+  dispatch(addQty(quantity));
+  dispatch(addEventId(id));
+  dispatch(addSectionId(sectionId));
+  dispatch(addTotalPayment(price));
+  dispatch(addTicketSection(ticketSection));
+  dispatch(addEventTitle(event.title));
+
+  // const [name, SetName] = react.useState("-");
+  // const [quan, SetQuan] = react.useState("-");
+  // const [price, SetPrice] = react.useState("-");
+  // let [count, set] = react.useState(0);
+  // function min() {
+  //   count = count - 1;
+  //   set(count);
+  // }
+  // function plus(id, title) {
+  //   count = count + 1;
+  //   set(count);
+  // }
+  // if (count <= -1) {
+  //   count = 0;
+  // }
+  // const [name1, SetName1] = react.useState("");
+  // const [num1, SetNum1] = react.useState(0);
+  // const [quan1, SetQuan1] = react.useState(0);
+  // const [price1, SetPrice1] = react.useState(0);
+  // const [name2, SetName2] = react.useState("");
+  // const [num2, SetNum2] = react.useState(0);
+  // const [quan2, SetQuan2] = react.useState(0);
+  // const [price2, SetPrice2] = react.useState(0);
+  // const [name3, SetName3] = react.useState("");
+  // const [num3, SetNum3] = react.useState(0);
+  // const [quan3, SetQuan3] = react.useState(0);
+  // const [price3, SetPrice3] = react.useState(0);
 
   // function plus1() {
   //   if (num1 < 4) {
@@ -186,6 +238,16 @@ function Booking() {
   //     }
   //   }
   // }
+
+
+  // react.useEffect(()=>{
+  //   const current = props.currentData
+  //   current[props.index] = {
+  //     name : props.data.name,
+  //     price: num = props.data.price,
+  //   };
+  //   props.Onchange(current)
+  // })
   return (
     <div className="md:bg-[#F4F7FF] ">
       <Navbar />
@@ -212,48 +274,16 @@ function Booking() {
                 />
               </div>
             </div>
-            {section.map((item) => {
+            {section.map((item,index) => {
               console.log(`{plus${item.id}}`);
               return (
-                <div className="flex flex-col gap-4 py-[25px]">
-                  <div className="flex gap-12">
-                    <div className="flex gap-4">
-                      <div className="w-[45px] h-[45px]">
-                        <img src={ticket_2} alt="" />
-                      </div>
-                      <div>
-                        <div className="font-semibold">{item.name}</div>
-                        <div className="text-gray-500">
-                          {item.quantity} Seats avaliable
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-center">
-                      <div className="font-semibold">Rp.{item.price}</div>
-                      <div className="text-gray-500">per person</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center pl-16 justify-between">
-                    <div className="font-semibold">Quantity</div>
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={() => {
-                          min(item.id, item.name);
-                        }}
-                        className="border border-gray-500 w-[30px] h-[30px] rounded-lg"
-                      >
-                        -
-                      </button>
-                      <div className="font-semibold">{count}</div>
-                      <button
-                        onClick={plus}
-                        className="border border-gray-500 w-[30px] h-[30px] rounded-lg"
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                <Tickets
+                key={item.id}
+                data={item}
+                index={index}
+                currentData={selectedSections}
+                onChange={setSelectedSections}
+                />
               );
             })}
             {/* <div className="flex flex-col gap-4 py-[25px]">
@@ -366,15 +396,15 @@ function Booking() {
               <div className="flex flex-col gap-4 ">
                 <div className="flex justify-between">
                   <div className="font-semibold">Ticket Section</div>
-                  <div className="text-[#508D4E] font-semibold">{name}</div>
+                  <div className="text-[#508D4E] font-semibold"> {ticketSection.length == 0 ? "-" : ticketSection.join(", ")}</div>
                 </div>
                 <div className="flex justify-between">
                   <div className="font-semibold">Quantity</div>
-                  <div className="text-[#508D4E] font-semibold">{}</div>
+                  <div className="text-[#508D4E] font-semibold">{quantity === 0 ? "-" : quantity}</div>
                 </div>
                 <div className="flex justify-between">
                   <div className="font-semibold">Total Payment</div>
-                  <div className="text-[#508D4E] font-semibold">{price}</div>
+                  <div className="text-[#508D4E] font-semibold">{price === 0 ? "-" : `Rp. ${price.toLocaleString("id")}`}</div>
                 </div>
               </div>
               <Link to="/payment" className="pt-10">

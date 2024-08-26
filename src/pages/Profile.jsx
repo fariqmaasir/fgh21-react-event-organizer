@@ -14,6 +14,8 @@ function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const [profession, setProfession] = react.useState([]);
+  const [valid, setValid] = react.useState(true);
+  const [msg, setMsg] = react.useState("");
   const [nationality, setNationality] = react.useState([]);
   const data = useSelector((state) => state.profile.data);
   const token = useSelector((state) => state.auth.token);
@@ -59,10 +61,16 @@ function Profile() {
     addProfile();
     // console.log("nation", nationality);
   }, []);
-  const date = new Date();
-  const futureDate = date.getDate(data.birthDate);
-  date.setDate(futureDate);
-  const defaultValue = date.toLocaleDateString("en-CA");
+
+  const date = new Date(data.birthDate);
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+  const day = String(date.getUTCDate()).padStart(2, '0');
+  
+  // Combine them into the desired format
+  const formattedDate = `${year}-${month}-${day}`;
+  console.log(formattedDate)
+
   async function editProfile(e) {
     e.preventDefault();
     const fullName = e.target.fullName.value;
@@ -70,18 +78,24 @@ function Profile() {
     const email = e.target.email.value;
     const phoneNumber = e.target.phoneNumber.value;
     const gender = e.target.gender.value;
-    const nationality = e.target.nationality.value;
+    const nationalityId = e.target.nationality.value;
+    console.log(nationalityId)
     const profession = e.target.profession.value;
-
+    const date = e.target.birthDate.value;
+    const newDate = new Date(date)
+    const birthDate = newDate.toISOString()
+    console.log(birthDate)
     const formData = new URLSearchParams({
       email,
       username,
       fullName,
+      birthDate,
       gender,
       phoneNumber,
-      nationality,
       profession,
+      nationalityId
     });
+    console.log(formData)
     const response = await fetch("http://localhost:8888/auth/edit", {
       method: "PATCH",
       headers: {
@@ -92,11 +106,16 @@ function Profile() {
     const json = await response.json();
     console.log(json);
     if (json.success) {
-      window.alert(json.message);
+      setMsg(json.message);
+      setValid(!valid)
       addProfile();
     } else {
-      window.alert(json.message);
+      setMsg(json.message);
+      setValid(!valid)
     }
+  }
+  function home() {
+    setValid(!valid);
   }
   return (
     <div className="md:bg-[#F4F7FF]">
@@ -110,6 +129,7 @@ function Profile() {
           <form
             className="flex md:block basis-3/6 flex-col gap-12"
             onSubmit={editProfile}
+
           >
             <div className="mr-64 md:mr-0 text-[20px] font-semibold">
               Profile
@@ -254,7 +274,7 @@ function Profile() {
                     name="birthDate"
                     id=""
                     className="px-5 w-11/12 h-full rounded-xl outline-none"
-                    defaultValue={defaultValue}
+                    defaultValue={formattedDate}
                   />
                 </div>
               </div>
@@ -278,14 +298,14 @@ function Profile() {
                 </div>
               </div>
             </div>
-            <div className="text-[#508D4E] font-semibold">
+            <form className="text-[#508D4E] font-semibold" enctype="multipart/form-data">
               <button
                 type="button"
                 className="border border-[#508D4E] w-[255px] h-[40px] rounded-xl"
               >
                 Choose Photo
               </button>
-            </div>
+            </form>
             <div className="text-[12px] flex flex-col gap-5 pr-12">
               <div>Image size: max, 2 MB</div>
               <div>Image formats: .JPG, .JPEG, .PNG</div>
@@ -294,6 +314,18 @@ function Profile() {
         </div>
       </div>
       <Footer className="bg-[#F4F7FF]" />
+      <div
+        className={
+          valid
+            ? "hidden"
+            : "top-0 bg-black/60 h-screen w-full fixed flex justify-center items-center"
+        }
+        onClick={home}
+      >
+        <div className="bg-white p-14 rounded-xl font-semibold text-xl">
+        {msg}
+        </div>
+      </div>
     </div>
   );
 }

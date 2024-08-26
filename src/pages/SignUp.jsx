@@ -9,6 +9,8 @@ function SignUp() {
   const navigate = useNavigate();
   const [type1, setType1] = react.useState("password");
   const [type2, setType2] = react.useState("password");
+  const [valid, setValid] = react.useState(true);
+  const [msg, setMsg] = react.useState("");
   function pass1() {
     if (type1 === "password") {
       setType1("text");
@@ -34,15 +36,18 @@ function SignUp() {
     const confPassword = event.target.confPassword.value;
     const terms = event.target.terms;
     if (password !== confPassword) {
-      window.alert("the password doesn't match, please check again");
+      setMsg("the password doesn't match, please check again");
+      setValid(!valid)
       return;
     }
     // else if (password.length < 8) {
-    //   window.alert("the password is too short, at least 8 letters");
+    //   setMsg("the password is too short, at least 8 letters");
+    // setValid(!valid)
     //   return;
     // }
     else if (!terms.checked) {
-      window.alert("please agree to the terms and conditions");
+      setMsg("please agree to the terms and conditions");
+      setValid(!valid)
       return;
     }
     const body = new URLSearchParams({
@@ -57,16 +62,13 @@ function SignUp() {
     });
     const data = await response.json();
     if (data.success) {
-      setValid(!valid);
-      dispatch(login(data.results.token));
-      addProfile(data.results.token);
       navigate("/login");
     } else {
       console.log(data.message);
-      // setWrong(!wrong);
     }
-    // else {
-    // }
+  }
+  function home() {
+    setValid(!valid);
   }
   return (
     <div className="flex">
@@ -143,9 +145,21 @@ function SignUp() {
             type="submit"
             className="md:w-80 bg-[#508D4E] text-white h-[55px] rounded-xl shadow-sm shadow-[#508D4E]"
           >
-            Sign in
+            Submit
           </button>
         </form>
+      </div>
+      <div
+        className={
+          valid
+            ? "hidden"
+            : "top-0 bg-black/60 h-screen w-full fixed flex justify-center items-center"
+        }
+        onClick={home}
+      >
+        <div className="bg-white p-14 rounded-xl font-semibold text-xl">
+        {msg}
+        </div>
       </div>
     </div>
   );

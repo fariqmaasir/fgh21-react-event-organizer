@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 function ChangePassword() {
   const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
+  const [msg, setMsg] = react.useState("");
   if (token === null) {
     navigate("/login");
   }
@@ -38,19 +39,24 @@ function ChangePassword() {
         });
         const json = await response.json();
         if (json.success) {
-          window.alert(json.message);
+          setMsg(json.message);
+          setValid(!valid);
         } else {
-          window.alert(json.message)
+          setMsg(json.message);
+          setValid(!valid)
         }
         console.log(json);
       }
       fetchPass();
     }
   }
+  function home() {
+    setValid(!valid);
+  }
   return (
     <div className="md:bg-[#F4F7FF]">
       <Navbar />
-      <div className="flex w-screen w-full h-full pt-[70px]">
+      <div className="flex w-screen h-full pt-[70px]">
         <div className="hidden md:block">
           <Sidebar />
         </div>
@@ -103,17 +109,18 @@ function ChangePassword() {
       </div>
       <Footer className="bg-[#F4F7FF]" />
       {/* <CreateEvent /> */}
-      {/* <div
+      <div
         className={
           valid
             ? "hidden"
-            : "absolute top-0 bg-black/60 h-screen w-screen flex justify-center items-center"
+            : "top-0 bg-black/60 h-screen w-full fixed flex justify-center items-center"
         }
+        onClick={home}
       >
         <div className="bg-white p-14 rounded-xl font-semibold text-xl">
-          Password Salah
+        {msg}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }

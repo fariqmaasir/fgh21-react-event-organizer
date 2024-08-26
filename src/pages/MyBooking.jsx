@@ -8,6 +8,34 @@ import { useNavigate } from "react-router-dom";
 
 function MyBooking() {
   const navigate = useNavigate();
+  function formatTimestamp(timestamp) {
+    const options = { 
+      weekday: 'short', 
+      day: 'numeric', 
+      month: 'short', 
+      hour: 'numeric', 
+      minute: 'numeric', 
+      hour12: true 
+    };
+  
+    return new Date(timestamp).toLocaleString('en-US', options);
+  }
+  function formatTimestampToDay(timestamp) {
+    const options = { 
+      day: 'numeric'
+      // month: 'short'
+    };
+  
+    return new Date(timestamp).toLocaleString('en-US', options);
+  }
+  function formatTimestampToMonth(timestamp) {
+    const options = { 
+      // day: 'numeric', 
+      month: 'short'
+    };
+  
+    return new Date(timestamp).toLocaleString('en-US', options);
+  }
   const token = useSelector((state) => state.auth.token);
   if (token === null) {
     navigate("/login");
@@ -74,7 +102,7 @@ function MyBooking() {
   return (
     <div className="md:bg-[#F4F7FF]">
       <Navbar />
-      <div className="flex w-screen w-full md:pt-[70px]">
+      <div className="flex w-screen md:pt-[70px]">
         <div className="md:block hidden">
           <Sidebar />
         </div>
@@ -114,17 +142,17 @@ function MyBooking() {
                 <div className="flex gap-5 px-5">
                   <div className="shadow-md w-[50px] h-[75px] rounded-xl flex flex-col items-center justify-center">
                     <div className="text-[#FF8900] font-semibold">
-                      {item.dates}
+                      {formatTimestampToDay(item.date)}
                     </div>
-                    <div className="text-[#C1C5D0]">{item.day}</div>
+                    <div className="text-[#C1C5D0]">{formatTimestampToMonth(item.date)}</div>
                   </div>
                   <div className="flex flex-col gap-4">
                     <div className="font-semibold text-[24px] tracking-wider">
-                      {item.title}
+                      {item.eventTitle}
                     </div>
                     <div>
                       <div className="text-[#373A42BF]/75">{item.location}</div>
-                      <div className="text-[#373A42BF]/75">{item.date}</div>
+                      <div className="text-[#373A42BF]/75">{formatTimestamp(item.date)}</div>
                     </div>
                     <div className="text-[#508D4E] font-medium cursor-pointer">
                       Detail

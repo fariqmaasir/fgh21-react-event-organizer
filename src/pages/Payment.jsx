@@ -8,7 +8,7 @@ import emoney from "../assets/icon/e-money.png";
 import retail from "../assets/icon/retail.png";
 import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 function Payment() {
   const navigate = useNavigate();
@@ -16,8 +16,72 @@ function Payment() {
   if (token === null) {
     navigate("/login");
   }
-  function myBook() {
-    navigate("/my-booking");
+
+  const eventTitle = useSelector((state) => state.transaction.eventTitle);
+  console.log(eventTitle)
+  const qty = useSelector((state) => state.transaction.qty);
+  const eventId = useSelector((state) => state.transaction.eventId);
+  const totalPayment = useSelector((state) => state.transaction.totalPayment);
+  const ticketSection = useSelector((state) => state.transaction.ticketSection);
+  const sectionId = useSelector((state) => state.transaction.sectionId);
+  const quan = useSelector((state) => state.transaction.quantity);
+  const [payMethod, setPayMethod] = react.useState(0);
+  function tooglePayment(event) {
+    setPayMethod(event.target.value);
+  }
+
+  const id = Math.ceil(Math.random() * 100000000)
+  const body = JSON.stringify({
+    user_id: Math.ceil(Math.random() * 100),
+    amount: parseInt(totalPayment),
+    item_id: `PROD${id}`,
+    item_name: eventTitle,
+  });
+  
+  async function paymentApi() {
+    try {
+      const response = await fetch("http://localhost:8181/midtrans/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body,
+      });
+      const json = await response.json();
+      console.log(json);
+      if(json.code = 200){
+        window.location.href = json.data.redirect_url
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+    
+  const formData = new URLSearchParams({
+    eventId: parseInt(eventId),
+    paymentId: parseInt(payMethod),
+    sectionId: parseInt(sectionId),
+    ticketQuantity: parseInt(quan),
+  });
+  for (const value of formData.values()) {
+    console.log(value);
+  }
+  async function payment() {
+    try {
+      const response = await fetch("http://localhost:8888/transactions/payment", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      paymentApi()
+    } catch (error) {
+      console.error("Error to proceed data");
+      navigate("/login");
+      return;
+    }
+    // navigate("/my-booking");
   }
   return (
     <div className="flex flex-col md:bg-[#F4F7FF]">
@@ -29,7 +93,7 @@ function Payment() {
             <div className="pb-10 text-[20px]">Payment Method</div>
             <div className="flex flex-col gap-5">
               <div className="flex items-center gap-[15px]">
-                <input type="radio" name="payment" id="card" />
+                <input type="radio" name="payment" id="card" value={1} onChange={tooglePayment}/>
                 <img src={card} alt="" />
                 <label htmlFor="card">Card</label>
               </div>
@@ -42,17 +106,17 @@ function Payment() {
                 </div>
               </div>
               <div className="flex items-center gap-[15px]">
-                <input type="radio" name="payment" id="bank" />
+                <input type="radio" name="payment" id="bank" value={2} onChange={tooglePayment}/>
                 <img src={bank} alt="" />
                 <label htmlFor="bank">Bank Transfer</label>
               </div>
               <div className="flex items-center gap-[15px]">
-                <input type="radio" name="payment" id="retail" />
+                <input type="radio" name="payment" id="retail" value={2} onChange={tooglePayment}/>
                 <img src={retail} alt="retail" />
                 <label htmlFor="">Retail</label>
               </div>
               <div className="flex items-center gap-[15px]">
-                <input type="radio" name="payment" id="emoney" />
+                <input type="radio" name="payment" id="emoney" value={2} onChange={tooglePayment}/>
                 <img src={emoney} alt="emoney" />
                 <label htmlFor="">E-Money</label>
               </div>
@@ -101,23 +165,25 @@ function Payment() {
                   <div className="flex justify-between">
                     <div className="font-semibold">Event</div>
                     <div className="text-[#508D4E] font-semibold">
-                      Sights & Sounds Exhibition
+                    {eventId === 0 ? "-" : eventTitle}
                     </div>
                   </div>
                   <div className="flex justify-between">
                     <div className="font-semibold">Ticket Section</div>
-                    <div className="text-[#508D4E] font-semibold">VIP</div>
+                    <div className="text-[#508D4E] font-semibold">   {ticketSection.length === 0 ? "-" : ticketSection.join(", ")}</div>
                   </div>
                   <div className="flex justify-between">
                     <div className="font-semibold">Quantity</div>
-                    <div className="text-[#508D4E] font-semibold">2</div>
+                    <div className="text-[#508D4E] font-semibold">{qty === 0 ? "-" : qty}</div>
                   </div>
                   <div className="flex justify-between">
                     <div className="font-semibold">Total Payment</div>
-                    <div className="text-[#508D4E] font-semibold">$70</div>
+                    <div className="text-[#508D4E] font-semibold">{totalPayment === 0
+                    ? "-"
+                    : `Rp.${totalPayment.toLocaleString("id")}`}</div>
                   </div>
                 </div>
-                <div className="pt-[50px]" onClick={myBook}>
+                <div className="pt-[50px]" onClick={payment}>
                   <button className="w-full md:w-80 bg-[#508D4E] text-white h-10 rounded-xl shadow-sm shadow-[#508D4E]">
                     Payment
                   </button>

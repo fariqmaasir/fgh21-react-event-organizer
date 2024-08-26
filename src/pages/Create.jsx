@@ -8,6 +8,34 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function Create() {
+  function formatTimestamp(timestamp) {
+    const options = { 
+      weekday: 'short', 
+      day: 'numeric', 
+      month: 'short', 
+      hour: 'numeric', 
+      minute: 'numeric', 
+      hour12: true 
+    };
+  
+    return new Date(timestamp).toLocaleString('en-US', options);
+  }
+  function formatTimestampToDay(timestamp) {
+    const options = { 
+      day: 'numeric'
+      // month: 'short'
+    };
+  
+    return new Date(timestamp).toLocaleString('en-US', options);
+  }
+  function formatTimestampToMonth(timestamp) {
+    const options = { 
+      // day: 'numeric', 
+      month: 'short'
+    };
+  
+    return new Date(timestamp).toLocaleString('en-US', options);
+  }
   const navigate = useNavigate();
   const [showEvent, setShowEvent] = react.useState(true);
   const token = useSelector((state) => state.auth.token);
@@ -19,20 +47,19 @@ function Create() {
   if (token === null) {
     navigate("/login");
   }
-
+  async function dataEvent() {
+    const response = await fetch("http://localhost:8888/events/users", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    const json = await response.json();
+    setEvent(json.results);
+    console.log(json.results);
+  }
   react.useEffect(() => {
     // Fetch event data
-    (async function () {
-      const response = await fetch("http://localhost:8888/events/users", {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
-      const json = await response.json();
-      setEvent(json.results);
-      console.log(json.results);
-    })();
-
+    dataEvent();
     // Toggle scroll lock
     if (!showEvent) {
       document.body.classList.add("overflow-hidden");
@@ -50,10 +77,19 @@ function Create() {
     setShowEvent(!showEvent);
   }
 
+  async function deleteEvent(id) {
+    const response = await fetch (`http://localhost:8888/events/${id}`,{
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+    dataEvent();
+  }
   return (
     <div className="md:bg-[#F4F7FF]">
       <Navbar />
-      <div className="flex w-screen w-full h-full md:pt-[70px]">
+      <div className="flex w-screen h-full md:pt-[70px]">
         <div className="md:block hidden">
           <Sidebar />
         </div>
@@ -90,9 +126,9 @@ function Create() {
                   <div className="flex gap-5">
                     <div className="shadow-md w-[50px] h-[75px] rounded-xl flex flex-col items-center justify-center">
                       <div className="text-[#FF8900] font-semibold">
-                        {item.dates}
+                        {formatTimestampToDay(item.date)}
                       </div>
-                      <div className="text-[#C1C5D0]">{item.day}</div>
+                      <div className="text-[#C1C5D0]">{formatTimestampToMonth(item.date)}</div>
                     </div>
                     <div className="flex flex-col gap-4">
                       <div className="font-semibold text-[24px] tracking-wider">
@@ -102,18 +138,18 @@ function Create() {
                         <div className="text-[#373A42BF]/75">
                           {item.location}
                         </div>
-                        <div className="text-[#373A42BF]/75">{item.date}</div>
+                        <div className="text-[#373A42BF]/75">{formatTimestamp(item.date)}</div>
                       </div>
                       <div className="flex gap-3">
-                        <div className="text-[#508D4E] font-medium cursor-pointer">
+                        <button className="text-[#508D4E] font-medium cursor-pointer">
                           Detail
-                        </div>
-                        <div className="text-[#508D4E] font-medium cursor-pointer">
+                        </button>
+                        <button className="text-[#508D4E] font-medium cursor-pointer">
                           Update
-                        </div>
-                        <div className="text-[#508D4E] font-medium cursor-pointer">
+                        </button>
+                        <button onClick={()=>deleteEvent(item.id)} className="text-[#508D4E] font-medium cursor-pointer">
                           Delete
-                        </div>
+                        </button>
                       </div>
                     </div>
                   </div>

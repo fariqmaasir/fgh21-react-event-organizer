@@ -44,7 +44,7 @@ function Sidebar() {
           </div>
           <div>
             <div className="font-semibold">{data.username}</div>
-            <div className="text=gray-500">{data.profession}, ID</div>
+            <div className="text=gray-500">{data.profession}</div>
           </div>
         </div>
         <div className="flex flex-col gap-7">
