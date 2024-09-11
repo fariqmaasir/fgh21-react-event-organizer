@@ -10,7 +10,7 @@ import {
 function Footer() {
   return (
     <footer className="bg-transparent mx-10">
-      <div className="flex md:flex-row justify-between flex-col gap-10 pt-20">
+      <div className="flex md:flex-row justify-between flex-col gap-10 pt-7">
         <div className="flex flex-col gap-24">
           <div>
             <Logo />

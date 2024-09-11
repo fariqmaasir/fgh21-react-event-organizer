@@ -1,5 +1,5 @@
 import react from "react";
-import { FaHeart } from "react-icons/fa6";
+import { FaHeart, FaSpinner } from "react-icons/fa6";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 function MyWishlist() {
   const navigate = useNavigate();
+  const [loading, setLoading] = react.useState(true);
   function formatTimestamp(timestamp) {
     const options = { 
       weekday: 'short', 
@@ -80,6 +81,7 @@ function MyWishlist() {
   // ];
   async function getWishlist() {
     try {
+      setLoading(false)
       const response = await fetch(
         "http://localhost:8888/events/wishlist/user",
         {
@@ -92,8 +94,9 @@ function MyWishlist() {
         throw new Error(`Response status: ${response.status}`);
       }
       const json = await response.json();
-      console.log(json.results);
+      console.log(json);
       setEvent(json.results);
+      setLoading(true)
     } catch (error) {
       console.error(error.message);
     }
@@ -107,6 +110,7 @@ function MyWishlist() {
   // }
 
   async function deleteWishlist(id) {
+    setLoading(false)
     const response = await fetch(
       "http://localhost:8888/events/wishlist/" + id,
       {
@@ -120,6 +124,7 @@ function MyWishlist() {
     console.log(json);
     if (json.success) {
       getWishlist();
+      setLoading(true)
     }
   }
 
@@ -133,7 +138,7 @@ function MyWishlist() {
   return (
     <div className="md:bg-[#F4F7FF]">
       <Navbar />
-      <div className="flex w-screen h-full md:pt-[70px]">
+      <div className="flex w-full h-full md:pt-[70px]">
         <div className="md:block hidden">
           <Sidebar />
         </div>
@@ -188,7 +193,7 @@ function MyWishlist() {
                     </div>
                   </div>
                   <button type="button" onClick={() => deleteWishlist(item.id)}>
-                    <FaHeart className="text-3xl text-[#508D4E]" />
+                    <FaHeart className="text-3xl text-[#508D4E] hover:text-[#8ced89]" />
                   </button>
                 </div>
               );
@@ -199,6 +204,17 @@ function MyWishlist() {
       <Footer className="bg-[#F4F7FF]" />
       <div className={showEvent ? "hidden" : ""}>
         <CreateEvent />
+      </div>
+      <div
+        className={
+          loading
+            ? "hidden"
+            : "top-0 bg-black/60 h-screen w-full fixed flex justify-center items-center"
+        }
+      >
+        <div className="animate-spin">
+          <FaSpinner className="text-7xl text-white"/>
+        </div>
       </div>
     </div>
   );

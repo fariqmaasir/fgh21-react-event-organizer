@@ -26,13 +26,7 @@ import { Link } from "react-router-dom";
 function Homepage() {
   const eventList = useSelector((state) => state.event.eventList);
   const dispatch = useDispatch();
-  function scrollL() {
-    console.log("test....");
-    document.getElementById("event-img").scrollLeft -= 100;
-  }
-  function scrollR() {
-    document.getElementById("event-img").scrollLeft += 100;
-  }
+  const [pages, setPages] = react.useState(1)
   function scrollLDown() {
     console.log("test....");
     document.getElementById("event-img-down").scrollLeft -= 100;
@@ -52,21 +46,22 @@ function Homepage() {
       setShowAll("See All");
     }
   }
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await fetch("http://localhost:8888/events/list");
-        if (!response.ok) {
-          throw new Error(`Response status: ${response.status}`);
-        }
-        const json = await response.json();
-        dispatch(reasignData(json.results));
-        setLoading(false);
-        console.log(json.results);
-      } catch (error) {
-        console.error(error.message);
+  async function listAllEvents () {
+    try {
+      const response = await fetch(`http://localhost:8888/events/list?page=${pages}&limit=5`);
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
       }
-    })();
+      const json = await response.json();
+      dispatch(reasignData(json.results));
+      setLoading(false);
+      console.log(json.results);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+  useEffect(() => {
+    listAllEvents();
     (async () => {
       try {
         const response = await fetch("http://localhost:8888/partners");
@@ -81,7 +76,18 @@ function Homepage() {
       }
     })();
   }, []);
- 
+  function scrollL() {
+    if (pages !== 1) {
+      setPages(pages - 1)
+      listAllEvents();
+    } else {
+      setPages(1)
+    }
+  }
+  function scrollR() {
+      setPages(pages + 1)
+      listAllEvents();
+  }
   return (
     <div>
       <Navbar />
@@ -92,9 +98,6 @@ function Homepage() {
       </div>
       {/* DATE CONTENT */}
       <div className="flex flex-col gap-10 justify-center items-center pt-[175px] pb-[50px]">   
-        <div className="animate-spin bg-black/10">
-          <FaSpinner className="text-7xl"/>
-        </div>
         <div className="gap-2 bg-red-200 h-8 w-40 flex justify-center items-center rounded-2xl text-red-500 font-semibold tracking-widest">
           <div className="h-px w-10 bg-red-500"></div>EVENT
         </div>

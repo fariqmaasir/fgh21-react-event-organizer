@@ -2,12 +2,13 @@ import react from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
-import { FaCalendar } from "react-icons/fa6";
+import { FaCalendar, FaSpinner } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function MyBooking() {
   const navigate = useNavigate();
+  const [loading, setLoading] = react.useState(true);
   function formatTimestamp(timestamp) {
     const options = { 
       weekday: 'short', 
@@ -77,6 +78,7 @@ function MyBooking() {
   // ];
   react.useEffect(() => {
     (async function () {
+      setLoading(false)
       const response = await fetch("http://localhost:8888/transactions/users", {
         headers: {
           Authorization: "Bearer " + token,
@@ -87,6 +89,7 @@ function MyBooking() {
       }
       const json = await response.json();
       setBooking(json.results);
+      setLoading(true)
       console.log(json.results);
     })();
   }, []);
@@ -102,7 +105,7 @@ function MyBooking() {
   return (
     <div className="md:bg-[#F4F7FF]">
       <Navbar />
-      <div className="flex w-screen md:pt-[70px]">
+      <div className="flex w-full md:pt-[70px]">
         <div className="md:block hidden">
           <Sidebar />
         </div>
@@ -183,6 +186,17 @@ function MyBooking() {
         </div>
       </div>
       <Footer className="bg-[#F4F7FF]" />
+      <div
+        className={
+          loading
+            ? "hidden"
+            : "top-0 bg-black/60 h-screen w-full fixed flex justify-center items-center"
+        }
+      >
+        <div className="animate-spin">
+          <FaSpinner className="text-7xl text-white"/>
+        </div>
+      </div>
       {/* <CreateEvent /> */}
     </div>
   );

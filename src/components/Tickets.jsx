@@ -5,6 +5,7 @@ function Tickets(props) {
     const [num, setNum] = useState(0);
     useEffect(() => {
         const current = props.currentData;
+        console.log("inicurret",current)
         current[props.index] = {
           id: props.data.id,
           name: props.data.name,

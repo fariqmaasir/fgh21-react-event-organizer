@@ -9,9 +9,11 @@ import retail from "../assets/icon/retail.png";
 import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { addTotalPayment, resetAll } from "../redux/reducers/transaction";
 
 function Payment() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   if (token === null) {
     navigate("/login");
@@ -26,6 +28,17 @@ function Payment() {
   const sectionId = useSelector((state) => state.transaction.sectionId);
   const quan = useSelector((state) => state.transaction.quantity);
   const [payMethod, setPayMethod] = react.useState(0);
+  console.log(qty)
+  console.log(eventId)
+  console.log(totalPayment)
+  console.log(ticketSection)
+  console.log(sectionId)
+  console.log(quan)
+  react.useEffect(()=>{
+    if (qty === 0 || eventId === 0 || totalPayment === 0 || ticketSection == [] || sectionId == [] || quan == []) {
+      navigate("/my-booking")
+    }
+  },[])
   function tooglePayment(event) {
     setPayMethod(event.target.value);
   }
@@ -75,13 +88,16 @@ function Payment() {
           Authorization: "Bearer " + token,
         },
       });
-      paymentApi()
+      const json = await response.json()
+      console.log(json)
+      // paymentApi()
+      dispatch(resetAll())
     } catch (error) {
       console.error("Error to proceed data");
       navigate("/login");
       return;
     }
-    // navigate("/my-booking");
+    navigate("/my-booking");
   }
   return (
     <div className="flex flex-col md:bg-[#F4F7FF]">

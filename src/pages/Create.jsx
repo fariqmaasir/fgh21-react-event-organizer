@@ -6,8 +6,10 @@ import { Link } from "react-router-dom";
 import CreateEvent from "../components/CreateEvent";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { FaSpinner } from "react-icons/fa6";
+import DetailEvent from "../components/DetailEvent";
 function Create() {
+  const [loading, setLoading] = react.useState(true);
   function formatTimestamp(timestamp) {
     const options = { 
       weekday: 'short', 
@@ -48,6 +50,7 @@ function Create() {
     navigate("/login");
   }
   async function dataEvent() {
+    setLoading(false)
     const response = await fetch("http://localhost:8888/events/users", {
       headers: {
         Authorization: "Bearer " + token,
@@ -55,6 +58,7 @@ function Create() {
     });
     const json = await response.json();
     setEvent(json.results);
+    setLoading(true)
     console.log(json.results);
   }
   react.useEffect(() => {
@@ -89,7 +93,7 @@ function Create() {
   return (
     <div className="md:bg-[#F4F7FF]">
       <Navbar />
-      <div className="flex w-screen h-full md:pt-[70px]">
+      <div className="flex w-full h-full md:pt-[70px]">
         <div className="md:block hidden">
           <Sidebar />
         </div>
@@ -160,8 +164,18 @@ function Create() {
         </div>
       </div>
       <Footer className="bg-[#F4F7FF]" />
-      <div className={showEvent ? "hidden" : ""}>
         <CreateEvent />
+        <DetailEvent/>
+      <div
+        className={
+          loading
+            ? "hidden"
+            : "top-0 bg-black/60 h-screen w-full fixed flex justify-center items-center"
+        }
+      >
+        <div className="animate-spin">
+          <FaSpinner className="text-7xl text-white"/>
+        </div>
       </div>
     </div>
   );

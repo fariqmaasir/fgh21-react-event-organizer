@@ -43,13 +43,13 @@ function Navbar() {
             <Link to="/" className="font-semibold hover:text-[#508D4E]">
               Home
             </Link>
-            <div
+            <button
               onClick={() => check("create-event")}
               className="font-semibold hover:text-[#508D4E]"
             >
               Create Event
-            </div>
-            <li className="font-semibold hover:text-[#508D4E]">Location</li>
+            </button>
+            <button className="font-semibold hover:text-[#508D4E]">Location</button>
           </ul>
         </div>
         <div>
@@ -81,7 +81,7 @@ function Navbar() {
                       <div className="min-w-[52px] h-[52px] bg-white rounded-full flex justify-center items-center ">
                         <div className="relative border border-gray-500 w-[44px] h-[44px] rounded-full bg-gray-500 overflow-hidden">
                           <img
-                            src={data.picture}
+                            src={ data.picture}
                             alt={data.username}
                             className="absolute top-0 left-0 w-full h-full object-cover"
                           />
@@ -89,7 +89,6 @@ function Navbar() {
                       </div>
                     </div>
                     <div>
-                      {console.log(data)}
                       <div className="font-semibold">{data.fullName}</div>
                     </div>
                   </div>

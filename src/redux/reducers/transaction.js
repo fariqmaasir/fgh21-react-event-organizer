@@ -39,6 +39,18 @@ const section = createSlice({
         addQuantity: (state, action) => {
             state.quantity = action.payload
         },
+        resetAll: (state) => {
+            {
+                state.data = [],
+                state.qty = 0,
+                state.eventId = 0,
+                state.eventTitle = "",
+                state.totalPayment = 0,
+                state.ticketSection = [],
+                state.sectionId = [],
+                state.quantity = []
+            }
+        }
     }
 })
 
@@ -51,5 +63,6 @@ export const {
     addTicketSection,
     addSectionId,
     addQuantity,
+    resetAll,
 } = section.actions
 export default section.reducer

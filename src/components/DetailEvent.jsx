@@ -29,7 +29,7 @@ function DetailEvent() {
       <div className="absolute top-0 left-0 bg-black/50 w-full h-screen flex justify-center items-center">
         <form
           className="bg-white w-[1105px] flex flex-col gap-5 p-[30px] rounded-3xl"
-          onSubmit={createEvent}
+          // onSubmit={createEvent}
         >
           <div className="flex items-center justify-between">
             <div className="font-semibold text-[20px]">Create Event</div>

@@ -1,7 +1,7 @@
 import react from "react";
 import event_img_1 from "../assets/img/event-img-1.png";
 import map_img from "../assets/img/map.png";
-import { FaMapPin, FaClock, FaHeart } from "react-icons/fa6";
+import { FaMapPin, FaClock, FaHeart, FaSpinner } from "react-icons/fa6";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -14,11 +14,13 @@ import { useSelector } from "react-redux";
 function Event() {
   const navigate = useNavigate();
   let { id } = useParams();
+  const [loading, setLoading] = react.useState(true);
 
   async function addWishlist() {
     if (token === null) {
       navigate("/login");
     } else {
+      setLoading(false)
       const response = await fetch(
         `http://localhost:8888/events/wishlist/${id}`,
         {
@@ -29,6 +31,7 @@ function Event() {
         }
       );
       const json = await response.json();
+      setLoading(true)
       console.log(json);
     }
   }
@@ -78,7 +81,7 @@ function Event() {
   return (
     <div className="md:bg-[#F4F7FF]">
       <Navbar />
-      <div className="flex flex-col items-center w-screen h-full pt-10 md:pt-[70px]">
+      <div className="flex flex-col items-center w-full h-full pt-10 md:pt-[70px]">
         <div className="flex bg-white md:p-20 md:w-[94%] rounded-3xl gap-10">
           {/* LEFT */}
           <div className="md:flex hidden basis-3/5 flex-col gap-12 items-center">
@@ -92,10 +95,10 @@ function Event() {
             </div>
             <div
               onClick={addWishlist}
-              className="flex items-center text-xl gap-3 cursor-pointer"
+              className="flex items-center text-xl gap-3 cursor-pointer hover:bg-red-300 p-2 rounded-3xl"
             >
               <div>
-                <FaHeart />
+                <FaHeart className="text-red-500"/>
               </div>
               <div>Add to Wishlist</div>
             </div>
@@ -229,6 +232,17 @@ function Event() {
         </div>
       </div>
       <Footer className="bg-[#F4F7FF]" />
+      <div
+        className={
+          loading
+            ? "hidden"
+            : "top-0 bg-black/60 h-screen w-full fixed flex justify-center items-center"
+        }
+      >
+        <div className="animate-spin">
+          <FaSpinner className="text-7xl text-white"/>
+        </div>
+      </div>
     </div>
   );
 }

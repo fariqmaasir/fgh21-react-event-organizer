@@ -251,7 +251,7 @@ function Booking() {
   return (
     <div className="md:bg-[#F4F7FF] ">
       <Navbar />
-      <div className="flex flex-col items-center w-screen h-full md:pt-[70px]">
+      <div className="flex flex-col items-center w-full h-full md:pt-[70px]">
         <div className="flex bg-white p-20 md:w-[94%] rounded-3xl gap-10">
           {/* LEFT */}
           <div className="md:flex basis-3/6 hidden">
@@ -275,7 +275,8 @@ function Booking() {
               </div>
             </div>
             {section.map((item,index) => {
-              console.log(`{plus${item.id}}`);
+              console.log(selectedSections)
+              console.log("-----------------")
               return (
                 <Tickets
                 key={item.id}

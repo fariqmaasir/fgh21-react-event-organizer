@@ -1,5 +1,5 @@
 import react from "react";
-import { FaFacebook, FaGoogle } from "react-icons/fa6";
+import { FaFacebook, FaGoogle, FaSpinner } from "react-icons/fa6";
 import Logo from "../components/Logo";
 import eyes_icon from "../assets/icon/eyes.png";
 import char from "../assets/img/login.png";
@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [loading, setLoading] = react.useState(true);
   // const token = useSelector((state) => state.auth.token);
   const [type, setType] = react.useState("password");
   const [valid, setValid] = react.useState(true);
@@ -23,7 +24,6 @@ function Login() {
     } else {
       setType("password");
     }
-    console.log("test...");
   }
   async function addProfile(token) {
     console.log(token);
@@ -34,20 +34,17 @@ function Login() {
       },
     });
     const json = await response.json();
-    console.log(json);
-    dispatch(assignProfile(json.results));
-    console.log("haloooo", json.results);
+    dispatch(assignProfile(json.results)); 
   }
   async function logProcess(event) {
     event.preventDefault();
-    console.log("test ..");
     const email = event.target.email.value;
     const password = event.target.password.value;
     const url = "http://localhost:8888/auth/login";
     const formData = new URLSearchParams();
     formData.append("email", email);
     formData.append("password", password);
-
+    setLoading(false)
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -57,9 +54,11 @@ function Login() {
       setValid(!valid);
       dispatch(login(data.results.token));
       addProfile(data.results.token);
+      setLoading(true)
     } else {
       setWrongMsg(data.message);
       setWrong(!wrong);
+      setLoading(true)
     }
   }
   function home() {
@@ -152,6 +151,17 @@ function Login() {
       >
         <div className="bg-white p-14 rounded-xl font-semibold text-xl">
           HALO SELAMAT DATANG :D
+        </div>
+      </div>
+      <div
+        className={
+          loading
+            ? "hidden"
+            : "top-0 bg-black/60 h-screen w-full fixed flex justify-center items-center"
+        }
+      >
+        <div className="animate-spin">
+          <FaSpinner className="text-7xl text-white"/>
         </div>
       </div>
     </div>

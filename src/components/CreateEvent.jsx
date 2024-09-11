@@ -3,7 +3,7 @@ import { FaX } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-function CreateEvent() {
+function CreateEvent(props) {
   const [showEvent, setShowEvent] = react.useState(false);
   const token = useSelector((state) => state.auth.token);
   async function createEvent(e) {
@@ -13,13 +13,13 @@ function CreateEvent() {
     const price = e.target.price.value;
     const category = e.target.category.value;
     const inputDate = e.target.date.value;
-    const newDate = new Date(inputDate)
+    
+    const indoTime = 7 * 60 * 60 * 1000
+    const newDate = new Date(new Date(inputDate).getTime() + indoTime)
     const date = newDate.toISOString()
     // const image = e.target.image.value;
+
     const descriptions = e.target.detail.value;
-    // console.log(date)
-    // const dates = new Date(date)
-    // console.log(dates.toISOString())
     const formData = new URLSearchParams({
       // image,
       title,
@@ -35,13 +35,14 @@ function CreateEvent() {
       body: formData,
     });
     const data = await response.json();
+    console.log(data)
   }
   function main() {
     setShowEvent(!showEvent);
   }
   return (
     <div className={showEvent ? "hidden" : ""}>
-      <div className="absolute top-0 left-0 bg-black/50 w-full h-screen flex justify-center items-center">
+      <div className="fixed top-0 left-0 bg-black/50 w-full h-screen flex justify-center items-center">
         <form
           className="bg-white w-[1105px] flex flex-col gap-5 p-[30px] rounded-3xl"
           onSubmit={createEvent}
@@ -110,7 +111,7 @@ function CreateEvent() {
                   <input
                     id="date"
                     name="date"
-                    type="date"
+                    type="datetime-local"
                     // placeholder="01/01/2022"
                     className="items-center w-[482px] pl-4 outline-none"
                   />
@@ -138,7 +139,7 @@ function CreateEvent() {
                 name="detail"
                 type="text"
                 placeholder="Input Detail ..."
-                className="items-center w-full pl-4 outline-none"
+                className="items-center h-full w-full pl-4 outline-none"
               />
             </div>
           </div>

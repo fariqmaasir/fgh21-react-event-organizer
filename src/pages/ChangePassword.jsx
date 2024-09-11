@@ -1,5 +1,5 @@
 import react from "react";
-import { FaChevronDown } from "react-icons/fa6";
+import { FaChevronDown, FaSpinner } from "react-icons/fa6";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 function ChangePassword() {
   const navigate = useNavigate();
+  const [loading, setLoading] = react.useState(true);
   const token = useSelector((state) => state.auth.token);
   const [msg, setMsg] = react.useState("");
   if (token === null) {
@@ -30,6 +31,7 @@ function ChangePassword() {
           oldPassword: oldPass,
           newPassword: newPass,
         });
+        setLoading(false)
         const response = await fetch("http://localhost:8888/auth/password", {
           method: "PATCH",
           headers: {
@@ -41,9 +43,11 @@ function ChangePassword() {
         if (json.success) {
           setMsg(json.message);
           setValid(!valid);
+          setLoading(true)
         } else {
           setMsg(json.message);
           setValid(!valid)
+          setLoading(true)
         }
         console.log(json);
       }
@@ -119,6 +123,17 @@ function ChangePassword() {
       >
         <div className="bg-white p-14 rounded-xl font-semibold text-xl">
         {msg}
+        </div>
+      </div>
+      <div
+        className={
+          loading
+            ? "hidden"
+            : "top-0 bg-black/60 h-screen w-full fixed flex justify-center items-center"
+        }
+      >
+        <div className="animate-spin">
+          <FaSpinner className="text-7xl text-white"/>
         </div>
       </div>
     </div>
