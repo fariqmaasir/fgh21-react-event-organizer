@@ -39,7 +39,6 @@ function Create() {
     return new Date(timestamp).toLocaleString('en-US', options);
   }
   const navigate = useNavigate();
-  const [showEvent, setShowEvent] = react.useState(true);
   const token = useSelector((state) => state.auth.token);
   if (token === null) {
     navigate("/login");
@@ -62,24 +61,30 @@ function Create() {
     console.log(json.results);
   }
   react.useEffect(() => {
-    // Fetch event data
     dataEvent();
-    // Toggle scroll lock
-    if (!showEvent) {
-      document.body.classList.add("overflow-hidden");
-    } else {
-      document.body.classList.remove("overflow-hidden");
-    }
+  }, []);
 
-    // Cleanup function
-    return () => {
-      document.body.classList.remove("overflow-hidden");
-    };
-  }, [showEvent, token]);
+  const [showDetail, setShowDetail] = react.useState(false);
+  const [showCreate, setShowCreate] = react.useState(false);
+  const [selectedEventId, setSelectedEventId] = react.useState(null);
 
-  function main() {
-    setShowEvent(!showEvent);
+  function handleShowCreate() {
+    setShowCreate(true);
   }
+  function handleCloseCreate(){
+    setShowCreate(false);
+  };
+
+  function handleShowDetail(id){
+    setSelectedEventId(id);
+    setShowDetail(true);
+  };
+
+  function handleCloseDetail(){
+    setShowDetail(false);
+  };
+
+
 
   async function deleteEvent(id) {
     const response = await fetch (`http://localhost:8888/events/${id}`,{
@@ -104,7 +109,7 @@ function Create() {
               <div className="font-semibold text-[20px]">Manage Event</div>
               <div className="w-[125px] h-[50px] bg-[#EAF1FF] flex items-center justify-center rounded-xl">
                 <button
-                  onClick={main}
+                  onClick={handleShowCreate}
                   className="text-blue-600 font-medium text-[12px]"
                 >
                   Create
@@ -145,7 +150,7 @@ function Create() {
                         <div className="text-[#373A42BF]/75">{formatTimestamp(item.date)}</div>
                       </div>
                       <div className="flex gap-3">
-                        <button className="text-[#508D4E] font-medium cursor-pointer">
+                        <button onClick={() => handleShowDetail(item.id)} className="text-[#508D4E] font-medium cursor-pointer">
                           Detail
                         </button>
                         <button className="text-[#508D4E] font-medium cursor-pointer">
@@ -164,8 +169,19 @@ function Create() {
         </div>
       </div>
       <Footer className="bg-[#F4F7FF]" />
-        <CreateEvent />
-        <DetailEvent/>
+      {showCreate && (
+        <CreateEvent
+          show={showCreate}
+          onClose={handleCloseCreate}
+        />
+      )}
+        {showDetail && (
+        <DetailEvent
+          id={selectedEventId}
+          show={showDetail}
+          onClose={handleCloseDetail}
+        />
+      )}
       <div
         className={
           loading

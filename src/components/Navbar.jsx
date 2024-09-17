@@ -17,6 +17,20 @@ function Navbar() {
     setShowMenu(!showMenu);
     console.log(showMenu);
   }
+  async function addProfile() {
+    const url = "http://localhost:8888/auth/profile";
+    const response = await fetch(url, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    const json = await response.json();
+    dispatch(assignProfile(json.results));
+  }
+
+  react.useEffect(()=>{
+    addProfile()
+  },[])
   function check(locate) {
     console.log("hai");
     if (token === null) {

@@ -140,6 +140,9 @@ function Profile() {
       body,
     });
     const json = await response.json()
+    if(json.success){
+      addProfile()
+    }
     console.log(json)
       
   }
@@ -151,13 +154,11 @@ function Profile() {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
 
-    // Membaca file menggunakan FileReader
-    const reader = new FileReader();
+        const reader = new FileReader();
     reader.readAsDataURL(selectedFile);
 
-    // Saat file dibaca selesai, simpan hasilnya di state preview
     reader.onloadend = () => {
-      setPreview(reader.result);  // Simpan URL gambar di state preview
+      setPreview(reader.result);
     };
   };
   return (

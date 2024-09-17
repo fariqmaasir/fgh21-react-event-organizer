@@ -3,7 +3,7 @@ import { FaX } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-function CreateEvent(props) {
+function CreateEvent({ show, onClose }) {
   const [showEvent, setShowEvent] = react.useState(false);
   const token = useSelector((state) => state.auth.token);
   async function createEvent(e) {
@@ -37,11 +37,10 @@ function CreateEvent(props) {
     const data = await response.json();
     console.log(data)
   }
-  function main() {
-    setShowEvent(!showEvent);
-  }
+
+  if (!show) return null;
+
   return (
-    <div className={showEvent ? "hidden" : ""}>
       <div className="fixed top-0 left-0 bg-black/50 w-full h-screen flex justify-center items-center">
         <form
           className="bg-white w-[1105px] flex flex-col gap-5 p-[30px] rounded-3xl"
@@ -49,7 +48,7 @@ function CreateEvent(props) {
         >
           <div className="flex items-center justify-between">
             <div className="font-semibold text-[20px]">Create Event</div>
-            <button type="button" onClick={main}>
+            <button type="button" onClick={onClose}>
               <FaX className="text-xl" />
             </button>
           </div>
@@ -153,7 +152,6 @@ function CreateEvent(props) {
           </div>
         </form>
       </div>
-    </div>
   );
 }
 

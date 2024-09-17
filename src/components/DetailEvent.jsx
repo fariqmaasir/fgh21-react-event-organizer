@@ -3,12 +3,12 @@ import { FaX } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-function DetailEvent() {
-  const [showEvent, setShowEvent] = react.useState(false);
+function DetailEvent({ id, show, onClose }) {
   const token = useSelector((state) => state.auth.token);
   const [event, setEvent] = react.useState([]);
+
   async function dataEvent() {
-    const response = await fetch("http://localhost:8888/events/list/", {
+    const response = await fetch(`http://localhost:8888/events/list/${id}`, {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -17,23 +17,23 @@ function DetailEvent() {
     setEvent(json.results);
     console.log(json.results);
   }
+
   react.useEffect(() => {
-    // Fetch event data
-    dataEvent();
-  },[])
-  function main() {
-    setShowEvent(!showEvent);
-  }
+    if (show) {
+      dataEvent();
+    }
+  }, [show]);
+
+  if (!show) return null;
   return (
-    <div className={showEvent ? "hidden" : ""}>
-      <div className="absolute top-0 left-0 bg-black/50 w-full h-screen flex justify-center items-center">
-        <form
+      <div className="fixed top-0 left-0 bg-black/50 w-full h-screen flex justify-center items-center">
+        <div
           className="bg-white w-[1105px] flex flex-col gap-5 p-[30px] rounded-3xl"
-          // onSubmit={createEvent}
+        // onSubmit={createEvent}
         >
           <div className="flex items-center justify-between">
-            <div className="font-semibold text-[20px]">Create Event</div>
-            <button type="button" onClick={main}>
+            <div className="font-semibold text-[20px]">Detail Event</div>
+            <button type="button" onClick={onClose}>
               <FaX className="text-xl" />
             </button>
           </div>
@@ -46,7 +46,8 @@ function DetailEvent() {
                     id="name"
                     name="name"
                     type="text"
-                    placeholder="Input Name Event ..."
+                    defaultValue={event.title}
+                    // placeholder="Input Name Event ..."
                     className="items-center w-[482px] pl-4 outline-none"
                   />
                 </div>
@@ -58,7 +59,7 @@ function DetailEvent() {
                     id="location"
                     name="location"
                     type="text"
-                    placeholder="Select Location"
+                    // placeholder="Select Location"
                     className="items-center w-[482px] pl-4 outline-none"
                   />
                 </div>
@@ -70,7 +71,7 @@ function DetailEvent() {
                     id="price"
                     name="price"
                     type="text"
-                    placeholder="Input Price ..."
+                    // placeholder="Input Price ..."
                     className="items-center w-[482px] pl-4 outline-none"
                   />
                 </div>
@@ -84,7 +85,7 @@ function DetailEvent() {
                     id="category"
                     name="category"
                     type="text"
-                    placeholder="Select Category"
+                    // placeholder="Select Category"
                     className="items-center w-[482px] pl-4 outline-none"
                   />
                 </div>
@@ -96,7 +97,7 @@ function DetailEvent() {
                     id="date"
                     name="date"
                     type="text"
-                    placeholder="01/01/2022"
+                    // placeholder="01/01/2022"
                     className="items-center w-[482px] pl-4 outline-none"
                   />
                 </div>
@@ -108,7 +109,7 @@ function DetailEvent() {
                     id="img"
                     name="img"
                     type="type"
-                    placeholder="Choose File ..."
+                    // placeholder="Choose File ..."
                     className="items-center w-[482px] pl-4 outline-none"
                   />
                 </div>
@@ -122,22 +123,16 @@ function DetailEvent() {
                 id="detail"
                 name="detail"
                 type="text"
-                placeholder="Input Detail ..."
+                defaultValue={event.descriptions}
+                // placeholder="Input Detail ..."
                 className="items-center w-full pl-4 outline-none"
               />
             </div>
           </div>
           <div className="right-0">
-            <button
-              type="submit"
-              className="w-80 bg-blue-500 font-semibold text-white h-[60px] rounded-xl shadow-sm shadow-blue-500"
-            >
-              Save
-            </button>
           </div>
-        </form>
+        </div>
       </div>
-    </div>
   );
 }
 

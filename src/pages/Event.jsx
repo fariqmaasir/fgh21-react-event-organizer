@@ -73,7 +73,7 @@ function Event() {
       }
       const json = await response.json();
       console.log(json.results);
-      setDataEvent(json.results[0]);
+      setDataEvent(json.results);
     })();
   }, []);
   console.log(dataEvent);
