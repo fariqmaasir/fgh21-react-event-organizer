@@ -54,7 +54,7 @@ function Booking() {
       }
       const json = await response.json();
       const results = json.results;
-      setEvent(results[0]);
+      setEvent(results);
       console.log("ini json", json);
     })();
   }, []);
