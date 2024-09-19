@@ -83,7 +83,7 @@ function MyWishlist() {
     try {
       setLoading(false)
       const response = await fetch(
-        "http://localhost:8888/events/wishlist/user",
+        "http://103.93.58.89:21217/events/wishlist/user",
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -112,7 +112,7 @@ function MyWishlist() {
   async function deleteWishlist(id) {
     setLoading(false)
     const response = await fetch(
-      "http://localhost:8888/events/wishlist/" + id,
+      "http://103.93.58.89:21217/events/wishlist/" + id,
       {
         method: "DELETE",
         headers: {

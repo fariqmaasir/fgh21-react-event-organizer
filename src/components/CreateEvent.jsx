@@ -27,7 +27,7 @@ function CreateEvent({ show, onClose }) {
       descriptions
       // locationId,
     });
-    const response = await fetch("http://localhost:8888/events/create", {
+    const response = await fetch("http://103.93.58.89:21217/events/create", {
       method: "POST",
       headers: {
         Authorization: "Bearer " + token,

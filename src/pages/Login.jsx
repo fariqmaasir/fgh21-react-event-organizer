@@ -27,7 +27,7 @@ function Login() {
   }
   async function addProfile(token) {
     console.log(token);
-    const url = "http://localhost:8888/auth/profile";
+    const url = "http://103.93.58.89:21217/auth/profile";
     const response = await fetch(url, {
       headers: {
         Authorization: "Bearer " + token,
@@ -40,7 +40,7 @@ function Login() {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
-    const url = "http://localhost:8888/auth/login";
+    const url = "http://103.93.58.89:21217/auth/login";
     const formData = new URLSearchParams();
     formData.append("email", email);
     formData.append("password", password);

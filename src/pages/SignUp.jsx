@@ -29,7 +29,7 @@ function SignUp() {
   }
   async function dataProcess(event) {
     event.preventDefault();
-    const url = "http://localhost:8888/auth/register";
+    const url = "http://103.93.58.89:21217/auth/register";
     const fullName = event.target.name.value;
     const email = event.target.email.value;
     const password = event.target.password.value;

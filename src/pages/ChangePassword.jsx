@@ -32,7 +32,7 @@ function ChangePassword() {
           newPassword: newPass,
         });
         setLoading(false)
-        const response = await fetch("http://localhost:8888/auth/password", {
+        const response = await fetch("http://103.93.58.89:21217/auth/password", {
           method: "PATCH",
           headers: {
             Authorization: "Bearer " + token,

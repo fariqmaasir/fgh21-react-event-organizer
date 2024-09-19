@@ -8,7 +8,7 @@ function DetailEvent({ id, show, onClose }) {
   const [event, setEvent] = react.useState([]);
 
   async function dataEvent() {
-    const response = await fetch(`http://localhost:8888/events/list/${id}`, {
+    const response = await fetch(`http://103.93.58.89:21217/events/list/${id}`, {
       headers: {
         Authorization: "Bearer " + token,
       },

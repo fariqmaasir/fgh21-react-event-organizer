@@ -35,7 +35,7 @@ function Booking() {
   react.useEffect(() => {
     (async function () {
       const response = await fetch(
-        "http://localhost:8888/events/section/" + id
+        "http://103.93.58.89:21217/events/section/" + id
       );
       if (!response.ok) {
         console.log("err");
@@ -47,7 +47,7 @@ function Booking() {
     })();
     (async function () {
       const response = await fetch(
-        "http://localhost:8888/events/list/" + id
+        "http://103.93.58.89:21217/events/list/" + id
       );
       if (!response.ok) {
         console.log("err");

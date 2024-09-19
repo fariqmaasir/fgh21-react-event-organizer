@@ -28,7 +28,7 @@ function Profile() {
   // }
   async function addProfile() {
     setLoading(false)
-    const url = "http://localhost:8888/auth/profile";
+    const url = "http://103.93.58.89:21217/auth/profile";
     const response = await fetch(url, {
       headers: {
         Authorization: "Bearer " + token,
@@ -54,7 +54,7 @@ function Profile() {
     // console.log("prof", profession);
     //   addProfile();
     async function addNation() {
-      const url = "http://localhost:8888/nationality";
+      const url = "http://103.93.58.89:21217/nationality";
       const response = await fetch(url, {
         headers: {
           Authorization: "Bearer " + token,
@@ -106,7 +106,7 @@ function Profile() {
     });
     console.log(formData)
     setLoading(false)
-    const response = await fetch("http://localhost:8888/auth/edit", {
+    const response = await fetch("http://103.93.58.89:21217/auth/edit", {
       method: "PATCH",
       headers: {
         Authorization: "Bearer " + token,
@@ -132,7 +132,7 @@ function Profile() {
     const body = new FormData()
     body.append( 'image', file)
  
-    const response = await fetch('http://localhost:8888/auth/upload', {
+    const response = await fetch('http://103.93.58.89:21217/auth/upload', {
       method: 'POST',
       headers: {
         Authorization: "Bearer " + token,

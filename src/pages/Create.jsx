@@ -50,7 +50,7 @@ function Create() {
   }
   async function dataEvent() {
     setLoading(false)
-    const response = await fetch("http://localhost:8888/events/users", {
+    const response = await fetch("http://103.93.58.89:21217/events/users", {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -87,7 +87,7 @@ function Create() {
 
 
   async function deleteEvent(id) {
-    const response = await fetch (`http://localhost:8888/events/${id}`,{
+    const response = await fetch (`http://103.93.58.89:21217/events/${id}`,{
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + token,

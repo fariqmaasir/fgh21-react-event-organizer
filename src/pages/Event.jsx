@@ -22,7 +22,7 @@ function Event() {
     } else {
       setLoading(false)
       const response = await fetch(
-        `http://localhost:8888/events/wishlist/${id}`,
+        `http://103.93.58.89:21217/events/wishlist/${id}`,
         {
           method: "POST",
           headers: {
@@ -67,7 +67,7 @@ function Event() {
   }
   react.useEffect(() => {
     (async function () {
-      const response = await fetch("http://localhost:8888/events/list/" + id);
+      const response = await fetch("http://103.93.58.89:21217/events/list/" + id);
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }

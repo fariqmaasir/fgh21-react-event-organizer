@@ -48,7 +48,7 @@ function Homepage() {
   }
   async function listAllEvents () {
     try {
-      const response = await fetch(`http://localhost:8888/events/list?page=${pages}&limit=5`);
+      const response = await fetch(`http://103.93.58.89:21217/events/list?page=${pages}&limit=5`);
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
@@ -64,7 +64,7 @@ function Homepage() {
     listAllEvents();
     (async () => {
       try {
-        const response = await fetch("http://localhost:8888/partners");
+        const response = await fetch("http://103.93.58.89:21217/partners");
         if (!response.ok) {
           throw new Error(`Response status: ${response.status}`);
         }

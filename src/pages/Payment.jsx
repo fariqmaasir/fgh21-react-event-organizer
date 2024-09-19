@@ -81,7 +81,7 @@ function Payment() {
   }
   async function payment() {
     try {
-      const response = await fetch("http://localhost:8888/transactions/payment", {
+      const response = await fetch("http://103.93.58.89:21217/transactions/payment", {
         method: "POST",
         body: formData,
         headers: {

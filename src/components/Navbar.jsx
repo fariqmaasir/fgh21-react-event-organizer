@@ -18,7 +18,7 @@ function Navbar() {
     console.log(showMenu);
   }
   async function addProfile() {
-    const url = "http://localhost:8888/auth/profile";
+    const url = "http://103.93.58.89:21217/auth/profile";
     const response = await fetch(url, {
       headers: {
         Authorization: "Bearer " + token,
