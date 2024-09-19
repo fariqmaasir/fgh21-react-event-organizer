@@ -8,6 +8,5 @@
 
     RUN npx vite build
 
-    ENTRYPOINT cd dist $$ serve -1 tcp://0.0.0.0:3000
-
+    ENTRYPOINT cd dist $$ serve -l tcp://0.0.0.0:3000
 
