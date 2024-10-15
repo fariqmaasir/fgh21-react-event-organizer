@@ -4,6 +4,7 @@ import eyes_icon from "../assets/icon/eyes.png";
 import char from "../assets/img/login.png";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 function SignUp() {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ function SignUp() {
   }
   async function dataProcess(event) {
     event.preventDefault();
-    const url = "http://103.93.58.89:21217/auth/register";
+    const url = `${BASE_URL}/auth/register`;
     const fullName = event.target.name.value;
     const email = event.target.email.value;
     const password = event.target.password.value;

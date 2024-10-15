@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import CreateEvent from "../components/CreateEvent";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 function ChangePassword() {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ function ChangePassword() {
           newPassword: newPass,
         });
         setLoading(false)
-        const response = await fetch("http://103.93.58.89:21217/auth/password", {
+        const response = await fetch(`${BASE_URL}/auth/password`, {
           method: "PATCH",
           headers: {
             Authorization: "Bearer " + token,

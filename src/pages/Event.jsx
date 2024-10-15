@@ -10,6 +10,7 @@ import avatar_2 from "../assets/img/avatar-2.png";
 import avatar_3 from "../assets/img/avatar-3.png";
 import avatar_4 from "../assets/img/avatar-4.png";
 import { useSelector } from "react-redux";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 function Event() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ function Event() {
     } else {
       setLoading(false)
       const response = await fetch(
-        `http://103.93.58.89:21217/events/wishlist/${id}`,
+        `${BASE_URL}/events/wishlist/${id}`,
         {
           method: "POST",
           headers: {
@@ -67,7 +68,7 @@ function Event() {
   }
   react.useEffect(() => {
     (async function () {
-      const response = await fetch("http://103.93.58.89:21217/events/list/" + id);
+      const response = await fetch(`${BASE_URL}/events/list/` + id);
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }

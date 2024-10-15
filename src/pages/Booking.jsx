@@ -18,6 +18,7 @@ import {
   addQuantity,
 } from "../redux/reducers/transaction";
 import Tickets from "../components/Tickets";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 function Booking() {
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ function Booking() {
   react.useEffect(() => {
     (async function () {
       const response = await fetch(
-        "http://103.93.58.89:21217/events/section/" + id
+        `${BASE_URL}/events/section/` + id
       );
       if (!response.ok) {
         console.log("err");
@@ -47,7 +48,7 @@ function Booking() {
     })();
     (async function () {
       const response = await fetch(
-        "http://103.93.58.89:21217/events/list/" + id
+        `${BASE_URL}/events/list/` + id
       );
       if (!response.ok) {
         console.log("err");

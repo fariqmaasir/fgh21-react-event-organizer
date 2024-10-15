@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../redux/reducers/auth";
 import { assignProfile } from "../redux/reducers/profile";
 import { useDispatch, useSelector } from "react-redux";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 function Login() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ function Login() {
   }
   async function addProfile(token) {
     console.log(token);
-    const url = "http://103.93.58.89:21217/auth/profile";
+    const url = `${BASE_URL}/auth/profile`;
     const response = await fetch(url, {
       headers: {
         Authorization: "Bearer " + token,
@@ -40,7 +41,7 @@ function Login() {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
-    const url = "http://103.93.58.89:21217/auth/login";
+    const url = `${BASE_URL}/auth/login`;
     const formData = new URLSearchParams();
     formData.append("email", email);
     formData.append("password", password);

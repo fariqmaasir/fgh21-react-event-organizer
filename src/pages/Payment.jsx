@@ -10,6 +10,7 @@ import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addTotalPayment, resetAll } from "../redux/reducers/transaction";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 function Payment() {
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ function Payment() {
   
   async function paymentApi() {
     try {
-      const response = await fetch("http://localhost:8181/midtrans/create", {
+      const response = await fetch(`http://localhost:8181/midtrans/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -81,7 +82,7 @@ function Payment() {
   }
   async function payment() {
     try {
-      const response = await fetch("http://103.93.58.89:21217/transactions/payment", {
+      const response = await fetch(`${BASE_URL}/transactions/payment`, {
         method: "POST",
         body: formData,
         headers: {

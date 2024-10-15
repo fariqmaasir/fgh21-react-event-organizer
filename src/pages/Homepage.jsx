@@ -15,22 +15,18 @@ import semarang_city from "../assets/img/semarang.jpeg";
 import solo_city from "../assets/img/solo.jpeg";
 import jakarta_city from "../assets/img/jakarta.jpeg";
 import yogyakarta_city from "../assets/img/yogyakarta.jpeg";
-import sponsor_icon_1 from "../assets/icon/sponsor-1.png";
-import sponsor_icon_2 from "../assets/icon/sponsor-2.png";
-import sponsor_icon_3 from "../assets/icon/sponsor-3.png";
-import sponsor_icon_4 from "../assets/icon/sponsor-4.png";
-import sponsor_icon_5 from "../assets/icon/sponsor-5.png";
-import sponsor_icon_6 from "../assets/icon/sponsor-6.png";
 import { Link } from "react-router-dom";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 function Homepage() {
   const eventList = useSelector((state) => state.event.eventList);
   const dispatch = useDispatch();
+  const [event, setEvent] = react.useState([]);
   const [pages, setPages] = react.useState(1)
   function scrollLDown() {
-    console.log("test....");
     document.getElementById("event-img-down").scrollLeft -= 100;
   }
+  console.log(BASE_URL)
   function scrollRDown() {
     document.getElementById("event-img-down").scrollLeft += 100;
   }
@@ -48,14 +44,13 @@ function Homepage() {
   }
   async function listAllEvents () {
     try {
-      const response = await fetch(`http://103.93.58.89:21217/events/list?page=${pages}&limit=5`);
+      const response = await fetch(`${BASE_URL}/events/list?page=${pages}&limit=5`);
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
       const json = await response.json();
       dispatch(reasignData(json.results));
       setLoading(false);
-      console.log(json.results);
     } catch (error) {
       console.error(error.message);
     }
@@ -64,12 +59,11 @@ function Homepage() {
     listAllEvents();
     (async () => {
       try {
-        const response = await fetch("http://103.93.58.89:21217/partners");
+        const response = await fetch(`${BASE_URL}/partners`);
         if (!response.ok) {
           throw new Error(`Response status: ${response.status}`);
         }
         const json = await response.json();
-        console.log(json.results);
         setPartners(json.results);
       } catch (error) {
         console.error(error.message);
@@ -87,6 +81,21 @@ function Homepage() {
   function scrollR() {
       setPages(pages + 1)
       listAllEvents();
+  }
+  async function searchList (e) {
+    try {
+      e.preventDefault()
+      const search = e.target.search.value
+      console.log(search)
+      const response = await fetch(`${BASE_URL}/events/list?search=${search}`);
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+      const json = await response.json();
+      dispatch(reasignData(json.results));
+    } catch (error) {
+      console.error(error.message);
+    }
   }
   return (
     <div>
@@ -127,6 +136,11 @@ function Homepage() {
         </div>
       </div>
       {/* EVENT BOX LIST */}
+      <div className="px-32 pb-10">
+        <form onSubmit={searchList} className="flex w-full items-center px-10 border-[#80AF81] bg-transparent border-2 h-14 rounded-2xl overflow-hidden ">
+          <input type="text" name="search" className="flex-1 outline-none bg-transparent"/>
+        </form>
+      </div>
       <div>
         <div
           id="event-img"
@@ -311,7 +325,7 @@ function Homepage() {
         <div className="grid grid-cols-2 md:grid-cols-6 gap-16">
           {partners.map((item) => {
             return (
-              <div className="w-[90px] h-[90px]">
+              <div key={item.id} className="w-[90px] h-[90px]">
                 <img
                   src={item.image}
                   alt={item.name}
@@ -409,9 +423,8 @@ function EventList() {
   const eventList = useSelector((state) => state.event.eventList);
   return eventList.map((item, index) => {
     // const img = eventList[index].attendees;
-    console.log(item);
     return (
-      <div>
+      <div key={item.id}>
         <Link to={`/event/${item.id}`}>
           <div
             className="relative w-64 h-96 rounded-3xl overflow-hidden"

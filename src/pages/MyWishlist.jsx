@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import CreateEvent from "../components/CreateEvent";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 function MyWishlist() {
   const navigate = useNavigate();
@@ -83,7 +84,7 @@ function MyWishlist() {
     try {
       setLoading(false)
       const response = await fetch(
-        "http://103.93.58.89:21217/events/wishlist/user",
+        `${BASE_URL}/events/wishlist/user`,
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -112,7 +113,7 @@ function MyWishlist() {
   async function deleteWishlist(id) {
     setLoading(false)
     const response = await fetch(
-      "http://103.93.58.89:21217/events/wishlist/" + id,
+      `${BASE_URL}/events/wishlist/` + id,
       {
         method: "DELETE",
         headers: {
